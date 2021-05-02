@@ -3,14 +3,14 @@ package Model;
 public class Deck 
 {
 
-	private Baralho<Carta> baralho;
+	private Pilha<Carta> baralho;
 	private String[] naipe = new String[] {"Copas", "Ouros", "Paus", "Espadas"};
 	private int[] valor = new int[] {2,3,4,5,6,7,8,9};
 	private String[] nome = new String[] {"dois","tres","quatro","cinco","seis","sete","oito","nove"};
 	
 	public Deck()
 	{
-		this.baralho = new Baralho<Carta>();
+		this.baralho = new Pilha<Carta>();
 	}
 	
 	public void IniciaBaralho()
@@ -58,5 +58,10 @@ public class Deck
 	public Carta Draw()
 	{
 		return (Carta) baralho.Pop();
+	}
+	
+	public void AddCard(Carta c)
+	{
+		baralho.Push(c);
 	}
 }

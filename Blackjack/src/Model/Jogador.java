@@ -2,7 +2,8 @@ package Model;
 
 import java.util.ArrayList;
 
-public class Jogador {
+public class Jogador 
+{
 
 	private int id;
 	private String nome;
@@ -10,19 +11,26 @@ public class Jogador {
 	private ArrayList<Ficha> ficha;
 	private int pontos;
 	
-	public Jogador(){
+	public Jogador()
+	{
 		this.pontos = 0;
 		this.id = (int) System.currentTimeMillis() % 1000;
 		this.mao = new ArrayList<Carta>();
 		this.ficha = new ArrayList<Ficha>();
 	}
 	
-	public void addCarta(Carta carta){
+	public void addCarta(Carta carta)
+	{
+		if(carta.GetValue() == 11 && carta.GetValue() + this.pontos > 21)
+		{
+			carta.SetValue(1);
+		}
 		this.pontos += carta.GetValue();
 		this.mao.add(carta);
 	}
 	
-	public void criarFichas() {
+	public void criarFichas()
+	{
 		Ficha f;
 		f = new Ficha("$100", 100, 2);
 		ficha.add(f);
@@ -38,43 +46,53 @@ public class Jogador {
 		ficha.add(f);
 	}
 	
-	public int getId() {
+	public int getId() 
+	{
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(int id) 
+	{
 		this.id = id;
 	}
 	
-	public String getNome() {
+	public String getNome()
+	{
 		return nome;
 	}
 	
-	public void setNome(String nome) {
+	public void setNome(String nome) 
+	{
 		this.nome = nome;
 	}
 	
-	public ArrayList<Carta> getMao() {
+	public ArrayList<Carta> getMao()
+	{
 		return mao;
 	}
 	
-	public void setMao(ArrayList<Carta> mao) {
+	public void setMao(ArrayList<Carta> mao) 
+	{
 		this.mao = mao;
 	}
 	
-	public int getPontos() {
+	public int getPontos() 
+	{
 		return pontos;
 	}
 	
-	public void setPontos(int pontos) {
+	public void setPontos(int pontos)
+	{
 		this.pontos = pontos;
 	}
 	
-	public ArrayList<Ficha> getFicha(){
+	public ArrayList<Ficha> getFicha()
+	{
 		return ficha;
 	}
 	
-	public void setFicha(ArrayList<Ficha> ficha) {
+	public void setFicha(ArrayList<Ficha> ficha)
+	{
 		this.ficha = ficha;
 	}
 }
