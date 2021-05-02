@@ -47,6 +47,11 @@ public class Deck
 		baralho.Shuffle();
 	}
 	
+	public int NumCartas()
+	{
+		return baralho.GetSize();
+	}
+	
 	public Carta Draw()
 	{
 		return (Carta) baralho.Pop();

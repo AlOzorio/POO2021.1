@@ -21,8 +21,15 @@ public class Baralho<T>
 		return this.cartas.remove(this.cartas.size()-1);
 	}
 	
+	
+	//Funções utilizadas para realizar o embaralhamento
 	public void Shuffle()
 	{
 		Collections.shuffle(cartas);
+	}
+	
+	public int GetSize()
+	{
+		return cartas.size();
 	}
 }
