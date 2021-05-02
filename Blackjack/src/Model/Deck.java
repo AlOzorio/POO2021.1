@@ -16,28 +16,31 @@ public class Deck
 	public void IniciaBaralho()
 	{
 		Carta c;
-		int i, j;
+		int i, j, k;
 		
-		for(i = 0; i < 4; i++)
+		for(k = 0; k < 4; k++)
 		{
-			c = new Carta(naipe[i], 10, "dez");
-			baralho.Push(c);
-			c = new Carta(naipe[i], 10, "valete");
-			baralho.Push(c);
-			c = new Carta(naipe[i], 10, "dama");
-			baralho.Push(c);
-			c = new Carta(naipe[i], 10, "rei");
-			baralho.Push(c);
-			c = new Carta(naipe[i], 11, "as");
-			baralho.Push(c);
-		}	
-		
-		for(i = 0; i < 4; i++)
-		{
-			for(j = 0; j < 8; j++)
+			for(i = 0; i < 4; i++)
 			{
-				c = new Carta(naipe[i], valor[j], nome[j]);
+				c = new Carta(naipe[i], 10, "dez");
 				baralho.Push(c);
+				c = new Carta(naipe[i], 10, "valete");
+				baralho.Push(c);
+				c = new Carta(naipe[i], 10, "dama");
+				baralho.Push(c);
+				c = new Carta(naipe[i], 10, "rei");
+				baralho.Push(c);
+				c = new Carta(naipe[i], 11, "as");
+				baralho.Push(c);
+			}	
+			
+			for(i = 0; i < 4; i++)
+			{
+				for(j = 0; j < 8; j++)
+				{
+					c = new Carta(naipe[i], valor[j], nome[j]);
+					baralho.Push(c);
+				}
 			}
 		}
 	}

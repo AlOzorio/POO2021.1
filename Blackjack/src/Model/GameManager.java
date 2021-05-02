@@ -6,7 +6,7 @@ public class GameManager
 	{
 		int NumCartas = d.NumCartas();
 		
-		if(NumCartas <= 47)
+		if(NumCartas <= 187)
 		{
 			d.Embaralhar();
 		}
