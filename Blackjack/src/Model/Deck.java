@@ -57,6 +57,11 @@ public class Deck
 	
 	public Carta Draw()
 	{
+		if(this.NumCartas() == 187)
+		{
+			this.Embaralhar();
+		}
+		
 		return (Carta) baralho.Pop();
 	}
 	
