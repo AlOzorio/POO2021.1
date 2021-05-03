@@ -6,13 +6,14 @@ import java.util.Iterator;
 
 public class GameManager 
 {
+	//Para realização dos testes, as variáveis abaixo foram postas como públicas
 	private Scanner s = new Scanner(System.in);
-	private static ArrayList<Jogador> jogadores = new ArrayList<Jogador>();
-	private ArrayList<Ficha> prizePool = new ArrayList<Ficha>();
-	private Deck deck = new Deck();
-	private Jogador currentPlayer;
-	private int turn = 0;
-	private Jogador winner;
+	public static ArrayList<Jogador> jogadores = new ArrayList<Jogador>();
+	public ArrayList<Ficha> prizePool = new ArrayList<Ficha>();
+	public Deck deck = new Deck();
+	public Jogador currentPlayer;
+	public int turn = 0;
+	public Jogador winner;
 	
 	public void NewGame()
 	{
@@ -63,6 +64,7 @@ public class GameManager
 		deck.IniciaBaralho();
 		deck.Embaralhar();
 	}
+	
 	public void AddToPrizePool(int value)
 	{
 		if (currentPlayer.getTotalBet() + value < 100)
