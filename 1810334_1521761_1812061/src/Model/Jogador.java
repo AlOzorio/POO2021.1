@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Jogador 
 {
 
-	private int id;
 	private String nome;
 	private ArrayList<Carta> mao;
 	private ArrayList<Ficha> ficha;
@@ -15,8 +14,8 @@ public class Jogador
 	
 	public Jogador()
 	{
+		this.nome = null;
 		this.pontos = 0;
-		this.id = (int) System.currentTimeMillis() % 1000;
 		this.mao = new ArrayList<Carta>();
 		this.ficha = new ArrayList<Ficha>();
 		this.totalBet = 0;
@@ -48,16 +47,6 @@ public class Jogador
 		ficha.add(f);
 		f = new Ficha(1, 10);
 		ficha.add(f);
-	}
-	
-	public int getId() 
-	{
-		return id;
-	}
-	
-	public void setId(int id) 
-	{
-		this.id = id;
 	}
 	
 	public String getNome()

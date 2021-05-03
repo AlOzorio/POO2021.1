@@ -13,6 +13,17 @@ public class Carta
 		this.nome = cardName;
 	}
 	
+	public String GetName()
+	{
+		return this.nome;
+	}
+
+	public String GetSuite()
+	{
+		return this.naipe;
+	}
+
+	
 	//As duas funções abaixo servem para alterar o valor do as, quando necessário
 	public int GetValue()
 	{
