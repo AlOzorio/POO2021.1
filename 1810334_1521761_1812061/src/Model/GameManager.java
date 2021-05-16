@@ -2,6 +2,8 @@ package Model;
 
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
 import View.NewJFramePlayer;
 
 import java.util.ArrayList;
@@ -29,6 +31,9 @@ public class GameManager
 			playerInterface.setVisible(true);
 			jogadoresInterface.add(playerInterface);
 		}
+		NewJFrameDealer windowDealer = new NewJFrameDealer();
+		windowDealer.setTitle("Dealer");
+		windowDealer.setVisible(true);
 		
 		// Reseta o prizepool
 		FichasPilha = new Ficha(1,0);

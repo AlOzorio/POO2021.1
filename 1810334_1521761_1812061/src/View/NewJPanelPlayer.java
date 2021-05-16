@@ -21,6 +21,7 @@ public class NewJPanelPlayer extends JPanel
 	private JButton JButtonStand = new JButton("Stand");
 	private JButton JButtonDouble = new JButton("Double");
 	private JLabel JLabelBet = new JLabel("Aposta = 0");
+	private JLabel JLabelCredits = new JLabel("Creditos = 250");
 	
 	public NewJPanelPlayer() 
 	{
@@ -37,13 +38,16 @@ public class NewJPanelPlayer extends JPanel
 		
 		for (int i = 0; i < JButtonList.size(); i++) {
 			JButtonList.get(i).setVisible(true);
-			JButtonList.get(i).setBounds(122+(i*130), 550, 80, 50);
+			JButtonList.get(i).setBounds(110+(i*130), 550, 100, 50);
 			this.add(JButtonList.get(i));
 		}
-		
+
 		this.add(JLabelBet);
 		JLabelBet.setVisible(true);
-		JLabelBet.setBounds(870, 450, 100, 50);
+		JLabelBet.setBounds(870, 500, 100, 50);
+		this.add(JLabelCredits);
+		JLabelCredits.setVisible(true);
+		JLabelCredits.setBounds(870, 450, 100, 50);
 	}
 	
 	public void paintComponent(Graphics G)
