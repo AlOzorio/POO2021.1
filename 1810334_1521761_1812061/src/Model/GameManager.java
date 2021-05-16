@@ -25,7 +25,7 @@ public class GameManager
 			Jogador player = new Jogador();
 			player.criarFichas();
 			jogadores.add(player);
-			NewJFramePlayer playerInterface = new NewJFramePlayer();
+			NewJFramePlayer playerInterface = new NewJFramePlayer(player);
 			playerInterface.setVisible(true);
 			jogadoresInterface.add(playerInterface);
 		}

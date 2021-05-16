@@ -55,20 +55,4 @@ public class NewJPanelGameStart extends JPanel {
 		GameManager gm = new GameManager();
 		gm.NewGame(this.numero);
 	}
-	public static ArrayList<JFrame> openWindows(int number)
-	{
-		ArrayList<JFrame> WindowsListLocal = new ArrayList<JFrame>();
-		JFrame windowD = new NewJFramePlayer();
-		windowD.setTitle("Dealer");
-		windowD.setVisible(true);
-		WindowsListLocal.add(windowD);
-		for (int i = 0; i < number; i++) {
-			JFrame window = new NewJFramePlayer();
-			window.setTitle("Jogador" + (i+1));
-			window.setVisible(true);
-			WindowsListLocal.add(window);
-		}
-		return WindowsListLocal;
-	}
-
 }

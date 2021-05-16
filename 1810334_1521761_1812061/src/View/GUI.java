@@ -16,17 +16,6 @@ public class GUI {
 		janela.setVisible(true);
 		
 	}
-	public static ArrayList<JFrame> openWindows(int number)
-	{
-		ArrayList<JFrame> WindowsListLocal = new ArrayList<JFrame>();
-		for (int i = 0; i < number; i++) {
-			JFrame window = new NewJFramePlayer();
-			window.setTitle("Menu");
-			window.setVisible(true);
-			WindowsListLocal.add(window);
-		}
-		return WindowsListLocal;
-	}
 }
 
 
