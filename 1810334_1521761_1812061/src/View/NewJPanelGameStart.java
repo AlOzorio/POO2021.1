@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
+import Model.GameManager;
 
 public class NewJPanelGameStart extends JPanel {
 
@@ -38,9 +39,9 @@ public class NewJPanelGameStart extends JPanel {
 	}
 	
 	private void ButtonClick(int i) {
-		numero = i;
-		javax.swing.SwingUtilities.getWindowAncestor(NewJPanelGameStart.this).setVisible(false);
+		this.numero = i;
 		createGame();
+		javax.swing.SwingUtilities.getWindowAncestor(NewJPanelGameStart.this).setVisible(false);
 	}
 
 	public int getNumber()
@@ -50,7 +51,9 @@ public class NewJPanelGameStart extends JPanel {
 	
 	public void createGame()
 	{
-		openWindows(this.numero);
+		//openWindows(this.numero);
+		GameManager gm = new GameManager();
+		gm.NewGame(this.numero);
 	}
 	public static ArrayList<JFrame> openWindows(int number)
 	{

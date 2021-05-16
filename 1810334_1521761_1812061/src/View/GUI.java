@@ -21,7 +21,7 @@ public class GUI {
 		ArrayList<JFrame> WindowsListLocal = new ArrayList<JFrame>();
 		for (int i = 0; i < number; i++) {
 			JFrame window = new NewJFramePlayer();
-			window.setTitle("Minha primeira GUI");
+			window.setTitle("Menu");
 			window.setVisible(true);
 			WindowsListLocal.add(window);
 		}

@@ -14,7 +14,7 @@ public class GameManagerTest
 	@Test
 	public void TestGM() 
 	{
-		GM.NewGame();
+		GM.NewGame(0);
 		
 		assertNotNull(GM.deck);
 		assertNotNull(GM.prizePool.get(0));
@@ -26,7 +26,7 @@ public class GameManagerTest
 	@Test
 	public void TestDeal() 
 	{
-		GM.NewGame();
+		GM.NewGame(0);
 		
 		GM.Deal();
 		assertNotSame(0,GM.turn);
@@ -37,7 +37,7 @@ public class GameManagerTest
 	@Test
 	public void TestStand() 
 	{
-		GM.NewGame();
+		GM.NewGame(0);
 		
 		GM.Stand();
 		assertNotSame(0,GM.turn);
@@ -48,7 +48,7 @@ public class GameManagerTest
 	@Test
 	public void TestHIt() 
 	{
-		GM.NewGame();
+		GM.NewGame(0);
 		
 		ArrayList<Carta> mao = (ArrayList<Carta>) GM.currentPlayer.getMao().clone();
 		GM.Hit();
@@ -58,7 +58,7 @@ public class GameManagerTest
 	@Test
 	public void TestPP() 
 	{
-		GM.NewGame();
+		GM.NewGame(0);
 		
 		ArrayList<Ficha> pp = (ArrayList<Ficha>) GM.prizePool.clone();
 		GM.AddToPrizePool(50);
@@ -68,7 +68,7 @@ public class GameManagerTest
 	@Test
 	public void TestClear() 
 	{
-		GM.NewGame();
+		GM.NewGame(0);
 		
 		Carta c = GM.deck.Draw();
 		GM.deck.AddCard(c);
@@ -80,7 +80,7 @@ public class GameManagerTest
 	@Test
 	public void TestQuit() 
 	{
-		GM.NewGame();
+		GM.NewGame(0);
 		
 		ArrayList<Jogador> j = (ArrayList<Jogador>) GM.jogadores.clone();
 		GM.Quit();

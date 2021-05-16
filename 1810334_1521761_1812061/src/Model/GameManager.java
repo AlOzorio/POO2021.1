@@ -1,52 +1,35 @@
 package Model;
 
 import java.util.Scanner;
+
+import View.NewJFramePlayer;
+
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class GameManager 
 {
 	//Para realização dos testes, as variáveis abaixo foram postas como públicas
-	private Scanner s = new Scanner(System.in);
 	public static ArrayList<Jogador> jogadores = new ArrayList<Jogador>();
+	public static ArrayList<NewJFramePlayer> jogadoresInterface = new ArrayList<NewJFramePlayer>();
 	public ArrayList<Ficha> prizePool = new ArrayList<Ficha>();
 	public Deck deck = new Deck();
 	public Jogador currentPlayer;
 	public int turn = 0;
 	public Jogador winner;
 	
-	public void NewGame()
+	public void NewGame(int playerCount)
 	{
-		String nome;
 		Ficha FichasPilha;
-		
-		
-		for(int i = 0; i < 4; i++)
+		for (int i = 0; i < playerCount; i++) 
 		{
-			System.out.println("Insira o nome do jogador:\n");
-			nome = new String(s.next());
-			
-			if(i == 0 && nome.length() == 0)
-			{
-				while(nome.length() == 0)
-				{
-					System.out.println("Você precisa de ao menos um jogador para iniciar.\n");
-					nome = new String(s.next());
-				}
-			}
-			
-			if(nome.length() == 0)
-			{
-				break;
-			}
-			
 			Jogador player = new Jogador();
-			player.setNome(nome);
 			player.criarFichas();
 			jogadores.add(player);
-
+			NewJFramePlayer playerInterface = new NewJFramePlayer();
+			playerInterface.setVisible(true);
+			jogadoresInterface.add(playerInterface);
 		}
-
+		
 		// Reseta o prizepool
 		FichasPilha = new Ficha(1,0);
 		prizePool.add(FichasPilha);
@@ -63,6 +46,7 @@ public class GameManager
 		currentPlayer = jogadores.get(turn);
 		deck.IniciaBaralho();
 		deck.Embaralhar();
+		System.out.println("jogo com " + playerCount + " jogadores!");
 	}
 	
 	public void AddToPrizePool(int value)

@@ -6,22 +6,20 @@ import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class NewJPanelPlayer extends JPanel {
+import Model.Carta;
+import Model.Jogador;
+
+public class NewJPanelPlayer extends JPanel 
+{
 	private Image imgBkg;
-	private Image card;
-	private Image card2;
-	private JButton Player1 = new JButton("1 Jogador");
+	Jogador player = new Jogador();
 	int aux = 0;
 	
-	public NewJPanelPlayer() {
+	public NewJPanelPlayer() 
+	{
 		imgBkg = readImage("Resources/blackjack.png");
-		this.card = readImage("Resources/4h.gif");
-		this.card2 = readImage("Resources/9d.gif");
-		
-		Player1.setVisible(false);
-		Player1.setBounds(0, 0, 100, 30);
-		this.add(Player1);
 		this.setLayout(null);
+		player.criarFichas();
 		
 	}
 	
@@ -29,8 +27,6 @@ public class NewJPanelPlayer extends JPanel {
 	{
 		super.paintComponent(G);
 		G.drawImage(this.imgBkg, 0, 0, 1000, 650, getFocusCycleRootAncestor());
-		G.drawImage(this.card, 400, 400, getFocusCycleRootAncestor());
-		G.drawImage(this.card2, 500, 400, getFocusCycleRootAncestor());
 	}
 	
 	private Image readImage(String ImgName)
@@ -45,9 +41,11 @@ public class NewJPanelPlayer extends JPanel {
 		}
 		return null;
 	}
-	private void newRepaint()
+	public void addCard(Carta carta) 
 	{
-		this.repaint();
+		this.player.addCarta(carta);
 	}
+	
+	
 
 }
