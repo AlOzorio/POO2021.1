@@ -13,6 +13,8 @@ public class NewJPanelGameStart extends JPanel {
 	private JButton Player3 = new JButton("3 Jogadores");
 	private JButton Player4 = new JButton("4 Jogadores");
 	
+	public GameManager gm;
+	
 	public int numero = 0;
 	
 	ArrayList<JButton> JButtonList = new ArrayList<JButton>();
@@ -52,7 +54,7 @@ public class NewJPanelGameStart extends JPanel {
 	public void createGame()
 	{
 		//openWindows(this.numero);
-		GameManager gm = new GameManager();
+		gm = new GameManager();
 		gm.NewGame(this.numero);
 	}
 }

@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Jogador 
 {
@@ -24,12 +25,19 @@ public class Jogador
 	
 	public void addCarta(Carta carta)
 	{
-		if(carta.GetValue() == 11 && carta.GetValue() + this.pontos > 21)
+
+		this.mao.add(carta);
+		if(carta.GetValue() + this.pontos > 21)
 		{
-			carta.SetValue(1);
+			for (int i = 0; i < this.mao.size(); i++) {
+				if (mao.get(i).GetValue() == 11 ) {
+					mao.get(i).SetValue(1);
+					this.pontos -= 10;
+					break;
+				}
+			}
 		}
 		this.pontos += carta.GetValue();
-		this.mao.add(carta);
 	}
 	
 	public void criarFichas()

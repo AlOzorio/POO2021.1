@@ -53,6 +53,7 @@ public class NewJPanelDealer extends JPanel {
 		this.add(JLabelPrizePool);
 		JLabelPrizePool.setVisible(true);
 		JLabelPrizePool.setBounds(870, 500, 100, 50);
+		
 	}
 	public void paintComponent(Graphics G)
 	{

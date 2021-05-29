@@ -4,7 +4,7 @@ public class Deck
 {
 
 	private Pilha<Carta> baralho;
-	private String[] naipe = new String[] {"Copas", "Ouros", "Paus", "Espadas"};
+	private String[] naipe = new String[] {"h_Copas", "d_Ouros", "c_Paus", "s_Espadas"};
 	private int[] valor = new int[] {2,3,4,5,6,7,8,9};
 	private String[] nome = new String[] {"dois","tres","quatro","cinco","seis","sete","oito","nove"};
 	
@@ -22,15 +22,15 @@ public class Deck
 		{
 			for(i = 0; i < 4; i++)
 			{
-				c = new Carta(naipe[i], 10, "dez");
+				c = new Carta(naipe[i], 10, "t_dez");
 				baralho.Push(c);
-				c = new Carta(naipe[i], 10, "valete");
+				c = new Carta(naipe[i], 10, "j_valete");
 				baralho.Push(c);
-				c = new Carta(naipe[i], 10, "dama");
+				c = new Carta(naipe[i], 10, "q_dama");
 				baralho.Push(c);
-				c = new Carta(naipe[i], 10, "rei");
+				c = new Carta(naipe[i], 10, "k_rei");
 				baralho.Push(c);
-				c = new Carta(naipe[i], 11, "as");
+				c = new Carta(naipe[i], 11, "a_as");
 				baralho.Push(c);
 			}	
 			
