@@ -18,6 +18,7 @@ import Model.GameManager;
 public class NewJPanelDealer extends JPanel {
 
 	private Image imgBkg;
+	private Image deck;
 	private Image imgCoin1;
 	private Image imgCoin5;
 	private Image imgCoin10;
@@ -36,6 +37,7 @@ public class NewJPanelDealer extends JPanel {
 		GameManager = gameManager;
 		
 		imgBkg = readImage("Resources/blackjackBKG.png");
+		deck = readImage("Resources/deck1.gif");
 		imgCoin1 = readImage("Resources/ficha 1$.png");
 		imgCoin5 = readImage("Resources/ficha 5$.png");
 		imgCoin10 = readImage("Resources/ficha 10$.png");
@@ -55,7 +57,7 @@ public class NewJPanelDealer extends JPanel {
 		
 		for (int i = 0; i < JButtonList.size(); i++) {
 			JButtonList.get(i).setVisible(true);
-			JButtonList.get(i).setBounds(110+(i*130), 550, 100, 50);
+			JButtonList.get(i).setBounds(310+(i*130), 550, 100, 50);
 			this.add(JButtonList.get(i));
 		}
 	
@@ -84,12 +86,13 @@ public class NewJPanelDealer extends JPanel {
 	{
 		super.paintComponent(G);
 		G.drawImage(this.imgBkg, 0, 0, 1000, 650, getFocusCycleRootAncestor());
-		G.drawImage(this.imgCoin1, 900, 600, 50, 50, getFocusCycleRootAncestor());
-		G.drawImage(this.imgCoin5, 800, 600, 50, 50, getFocusCycleRootAncestor());
-		G.drawImage(this.imgCoin10, 700, 600, 50, 50, getFocusCycleRootAncestor());
-		G.drawImage(this.imgCoin20, 600, 600, 50, 50, getFocusCycleRootAncestor());
-		G.drawImage(this.imgCoin50, 500, 600, 50, 50, getFocusCycleRootAncestor());
-		G.drawImage(this.imgCoin100, 400, 600, 50, 50, getFocusCycleRootAncestor());
+		G.drawImage(this.deck, 40, 200, 73, 97, getFocusCycleRootAncestor());
+		G.drawImage(this.imgCoin1, 725, 350, 50, 50, getFocusCycleRootAncestor());
+		G.drawImage(this.imgCoin5, 625, 350, 50, 50, getFocusCycleRootAncestor());
+		G.drawImage(this.imgCoin10, 525, 350, 50, 50, getFocusCycleRootAncestor());
+		G.drawImage(this.imgCoin20, 425, 350, 50, 50, getFocusCycleRootAncestor());
+		G.drawImage(this.imgCoin50, 325, 350, 50, 50, getFocusCycleRootAncestor());
+		G.drawImage(this.imgCoin100, 225, 350, 50, 50, getFocusCycleRootAncestor());
 	}
 	
 	private Image readImage(String ImgName)
