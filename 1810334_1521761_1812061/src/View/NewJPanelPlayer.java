@@ -79,10 +79,11 @@ public class NewJPanelPlayer extends JPanel
 
 	private void ButtonClickStand() {
 		// TODO Auto-generated method stub
-		if (this == GameManager.jogadoresInterface.get(GameManager.turn).p) {
-			if (GameManager.jogadores.get(GameManager.turn).getDealt() == true) {
-				GameManager.Stand();
-				this.repaint();
+		if (this == GameManager.jogadoresInterface.get(GameManager.turn).p) 
+		{
+			if (GameManager.jogadores.get(GameManager.turn).getDealt() == true) 
+			{
+				GameManager.Stand();				
 			}
 			
 		}

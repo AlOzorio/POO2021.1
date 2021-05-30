@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import javax.swing.JFrame;
 
+import View.NewJFrameDealer;
 import View.NewJFramePlayer;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class GameManager
 			playerInterface.setTitle("Jogador " + String.valueOf(i+1));
 			jogadoresInterface.add(playerInterface);
 		}
-		NewJFrameDealer windowDealer = new NewJFrameDealer();
+		NewJFrameDealer windowDealer = new NewJFrameDealer(this);
 		windowDealer.setTitle("Dealer");
 		windowDealer.setVisible(true);
 		
@@ -115,20 +116,18 @@ public class GameManager
 	
 	public void Hit()
 	{
-		for(int i = 0; i < jogadores.size() - 1; i++)
+		if(jogadores.get(turn).getPontos() < 21 && currentPlayer != null)
 		{
-			if(jogadores.get(i).getPontos() == 21)
+			for(int i = 0; i < jogadores.size() - 1; i++)
 			{
-				//fim de rodada
+				if(jogadores.get(i).getPontos() == 21)
+				{
+					//fim de rodada
+				}
 			}
-		}
-		
-		Carta topDeck = deck.Draw();
-		currentPlayer.addCarta(topDeck);
-		
-		if(currentPlayer.getPontos() > 21)
-		{
-			Stand();
+			
+			Carta topDeck = deck.Draw();
+			currentPlayer.addCarta(topDeck);
 		}
 	}
 	
@@ -138,7 +137,7 @@ public class GameManager
 		{
 			winner = jogadores.get(0);
 			
-			for(int i = 0; i < jogadores.size(); i++)
+			for(int i = 0; i < jogadores.size() - 1; i++)
 			{
 				if(jogadores.get(i).getPontos() > winner.getPontos())
 				{
@@ -146,7 +145,8 @@ public class GameManager
 				}
 			}
 			
-			//Distribuir prize pool para o vencedor
+			currentPlayer = null;
+			RewardWinner();
 		}
 		else
 		{
@@ -268,9 +268,17 @@ public class GameManager
 		}
 	}
 	
+	private void RepaintAll()
+	{	
+		for(int i = 0; i < GameManager.jogadoresInterface.size(); i++)
+		{
+			GameManager.jogadoresInterface.get(i).repaint();	
+		}
+	}
+	
 	public void Clear()
 	{
-		for(int i = 0; i < jogadores.size() - 1; i++)
+		for(int i = 0; i < jogadores.size(); i++)
 		{
 			for(int j = 0; j < jogadores.get(i).getMao().size(); j++)
 			{
@@ -279,8 +287,11 @@ public class GameManager
 			}
 			
 			jogadores.get(i).setMao(new ArrayList<Carta>());
+			jogadores.get(i).setDealt(false);
+			jogadores.get(i).setPontos(0);
 		}
 		
+		RepaintAll();
 		deck.Embaralhar();
 		turn = 0;
 		currentPlayer = jogadores.get(turn);
@@ -299,20 +310,41 @@ public class GameManager
 			for (int i = 0; i < currentPlayer.getMao().size() - 1; i++) 
 			{
 				Carta c = currentPlayer.getMao().get(i);
-				deck.AddCard(c);
+				deck.AddCard(c);				
 			}
+			jogadores.get(turn).setMao(new ArrayList<Carta>());			
 		}
+		
+		jogadoresInterface.get(turn).setVisible(false);
 		jogadores.remove(turn);
+		jogadoresInterface.remove(turn);
+		
+		if(jogadores.size() == 0)
+		{
+			System.exit(0);
+		}
+		
+		if(turn == jogadores.size())
+		{
+			turn = turn - 1;
+			currentPlayer = jogadores.get(turn);
+			Stand();
+		}
+		else
+		{
+			currentPlayer = jogadores.get(turn);
+		}
+				
 		deck.Embaralhar();
 	}
 	
 	public void RewardWinner()
 	{	
 		// Recompompensa pela vitoria ordinaria
-		for (int i = 0; i < 6; i++)
+		/*for (int i = 0; i < 6; i++)
 		{
 			this.winner.getFicha().get(i).setQuantidade(this.winner.getFicha().get(i).getQuantidade() + prizePool.get(i).getQuantidade());
-		}
+		}*/
 	}
 	
 }

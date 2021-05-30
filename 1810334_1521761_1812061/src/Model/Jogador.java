@@ -27,7 +27,8 @@ public class Jogador
 	{
 
 		this.mao.add(carta);
-		if(carta.GetValue() + this.pontos > 21)
+		this.pontos += carta.GetValue();
+		if(this.pontos > 21)
 		{
 			for (int i = 0; i < this.mao.size(); i++) {
 				if (mao.get(i).GetValue() == 11 ) {
@@ -37,7 +38,6 @@ public class Jogador
 				}
 			}
 		}
-		this.pontos += carta.GetValue();
 	}
 	
 	public void criarFichas()
