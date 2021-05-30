@@ -6,4 +6,9 @@ public class Dealer extends Jogador
 	{
 		
 	}
+
+	public void showHiddenCard() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -3,6 +3,7 @@ package Model;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import View.NewJFrameDealer;
 import View.NewJFramePlayer;
@@ -118,6 +119,7 @@ public class GameManager
 			turn++;
 		}
 		currentPlayer = jogadores.get(turn); 
+		JOptionPane.showMessageDialog(null,"Jogador deu Deal","turno",JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public void Hit()
@@ -144,29 +146,16 @@ public class GameManager
 		{
 			jogadores.get(turn).setOut(true);
 		}
+		JOptionPane.showMessageDialog(null,"Jogador deu Hit","turno",JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public void Stand()
 	{
-		if(turn == jogadores.size() - 1)
+		JOptionPane.showMessageDialog(null,"Jogador deu Hit","turno",JOptionPane.INFORMATION_MESSAGE);
+		
+		if(turn == jogadores.size() - 1) //Se for o ultimo jogador, acabou a rodada
 		{
-			while(dealer.getPontos() < 17)
-			{
-				Dealer_Hit();
-			}
-			
-			winner = dealer;
-			
-			for(int i = 0; i < jogadores.size() - 1; i++)
-			{
-				if(jogadores.get(i).getPontos() > winner.getPontos() && jogadores.get(i).getOut())
-				{
-					winner = jogadores.get(i);
-				}
-			}
-			
-			currentPlayer = null;
-			RewardWinner();
+			DealerTurn()
 		}
 		else
 		{
@@ -380,10 +369,99 @@ public class GameManager
 		}*/
 	}
 	
+	private void DeclareWinner()
+	{
+		int possibleWinnerPoints = 0;
+		Boolean dealerNeedToShowCard = false;
+		
+		if (dealer.getPontos() == 10)
+		{
+			for(int i = 0; i < jogadores.size() - 1; i++)
+			{
+				if(jogadores.get(i).getBlackjack() == true)
+				{
+					dealerNeedToShowCard = true;
+				}
+			}
+			
+			if (dealerNeedToShowCard == true)
+			{
+				dealer.showHiddenCard();
+				if (dealer.getPontos() == 21) 
+				{
+					winner = dealer;
+					return;
+				}
+				else
+				{
+					// declara quem venceu, mas tem o caso de mais de um ganhar do dealer com a mesma pontuação
+				}
+			}
+			else 
+			{
+				winner = dealer;
+				return;
+			}
+		}
+		
+		while(dealer.getPontos() < 17)
+		{
+			Dealer_Hit();
+		}
+	
+		for(int i = 0; i < jogadores.size() - 1; i++)
+		{
+			if(jogadores.get(i).getPontos() < 22)
+			{
+				if (jogadores.get(i).getPontos() > possibleWinnerPoints)
+				{
+					winner = jogadores.get(i);
+					possibleWinnerPoints = jogadores.get(i).getPontos(); // MAIS DE UM JOGADOR
+				}
+				
+			}
+		}
+		
+		
+		if(winner.getPontos() < dealer.getPontos())
+			{
+				winner = dealer;
+			}
+	}
 	//endregion
 	
 	//region Dealer
 	
+	private void DealerTurn()
+	{
+		Boolean theresPossibleWinner = false;
+		
+		for(int i = 0; i < jogadores.size() - 1; i++)
+		{
+			if(jogadores.get(i).getOut()  == false)
+			{
+				theresPossibleWinner = true;
+				break;
+			}
+		}
+		
+		if (theresPossibleWinner == true)
+		{
+			DeclareWinner();
+		}
+		else
+		{
+			winner = dealer;
+		}
+		
+		rewardWinner();
+	}
+	
+	private void rewardWinner() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public void Dealer_Deal()
 	{
 		dealer.addCarta(deck.Draw());
