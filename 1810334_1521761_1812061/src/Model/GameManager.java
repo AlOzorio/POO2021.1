@@ -14,9 +14,11 @@ public class GameManager
 	//Para realização dos testes, as variáveis abaixo foram postas como públicas
 	public static ArrayList<Jogador> jogadores = new ArrayList<Jogador>();
 	public static ArrayList<NewJFramePlayer> jogadoresInterface = new ArrayList<NewJFramePlayer>();
+	public NewJFrameDealer windowDealer;
 	public ArrayList<Ficha> prizePool = new ArrayList<Ficha>();
 	public Deck deck = new Deck();
 	public Jogador currentPlayer;
+	public Dealer dealer; 
 	public int turn = 0;
 	public Jogador winner;
 	
@@ -33,7 +35,8 @@ public class GameManager
 			playerInterface.setTitle("Jogador " + String.valueOf(i+1));
 			jogadoresInterface.add(playerInterface);
 		}
-		NewJFrameDealer windowDealer = new NewJFrameDealer(this);
+		dealer = new Dealer();
+		windowDealer = new NewJFrameDealer(dealer, this);
 		windowDealer.setTitle("Dealer");
 		windowDealer.setVisible(true);
 		
@@ -53,8 +56,11 @@ public class GameManager
 		currentPlayer = jogadores.get(turn);
 		deck.IniciaBaralho();
 		deck.Embaralhar();
+		Dealer_Deal();
 		System.out.println("jogo com " + playerCount + " jogadores!");
 	}
+	
+	//region Player 
 	
 	public void AddToPrizePool(int value)
 	{
@@ -116,18 +122,27 @@ public class GameManager
 	
 	public void Hit()
 	{
-		if(jogadores.get(turn).getPontos() < 21 && currentPlayer != null)
+		if(jogadores.get(turn).getOut() == false && currentPlayer != null)
 		{
 			for(int i = 0; i < jogadores.size() - 1; i++)
 			{
-				if(jogadores.get(i).getPontos() == 21)
+				if(dealer.getPontos() == 21)
 				{
-					//fim de rodada
+					winner = jogadores.get(i);
+				}
+				else if(jogadores.get(i).getPontos() == 21)
+				{
+					winner = jogadores.get(i);
 				}
 			}
 			
 			Carta topDeck = deck.Draw();
 			currentPlayer.addCarta(topDeck);
+		}
+		
+		if(jogadores.get(turn).getPontos() > 21)
+		{
+			jogadores.get(turn).setOut(true);
 		}
 	}
 	
@@ -135,11 +150,16 @@ public class GameManager
 	{
 		if(turn == jogadores.size() - 1)
 		{
-			winner = jogadores.get(0);
+			while(dealer.getPontos() < 17)
+			{
+				Dealer_Hit();
+			}
+			
+			winner = dealer;
 			
 			for(int i = 0; i < jogadores.size() - 1; i++)
 			{
-				if(jogadores.get(i).getPontos() > winner.getPontos())
+				if(jogadores.get(i).getPontos() > winner.getPontos() && jogadores.get(i).getOut())
 				{
 					winner = jogadores.get(i);
 				}
@@ -270,10 +290,13 @@ public class GameManager
 	
 	private void RepaintAll()
 	{	
-		for(int i = 0; i < GameManager.jogadoresInterface.size(); i++)
+		for(int i = 0; i < jogadoresInterface.size(); i++)
 		{
-			GameManager.jogadoresInterface.get(i).repaint();	
+			jogadoresInterface.get(i).repaint();	
 		}
+		
+		windowDealer.repaint();
+		Dealer_Deal();
 	}
 	
 	public void Clear()
@@ -291,8 +314,18 @@ public class GameManager
 			jogadores.get(i).setPontos(0);
 		}
 		
-		RepaintAll();
+		for(int i = 0; i < dealer.getMao().size(); i++)
+		{
+			Carta c = dealer.getMao().get(i);
+			deck.AddCard(c);
+		}
+		
+		dealer.setMao(new ArrayList<Carta>());
+		dealer.setDealt(false);
+		dealer.setPontos(0);
+		
 		deck.Embaralhar();
+		RepaintAll();
 		turn = 0;
 		currentPlayer = jogadores.get(turn);
 	}
@@ -347,4 +380,34 @@ public class GameManager
 		}*/
 	}
 	
+	//endregion
+	
+	//region Dealer
+	
+	public void Dealer_Deal()
+	{
+		dealer.addCarta(deck.Draw());
+		dealer.addCarta(deck.Draw());
+		dealer.setDealt(true);
+		
+		dealer.setPontos(dealer.getPontos() - dealer.getMao().get(0).GetValue());
+	}
+	
+	public void Dealer_Hit()
+	{
+		for(int i = 0; i < jogadores.size() - 1; i++)
+		{
+			if(jogadores.get(i).getPontos() == 21)
+			{
+				winner = jogadores.get(i);
+			}
+		}
+		
+		Carta topDeck = deck.Draw();
+		dealer.addCarta(topDeck);
+		
+		windowDealer.repaint();
+	}
+	
+	//endregion
 }

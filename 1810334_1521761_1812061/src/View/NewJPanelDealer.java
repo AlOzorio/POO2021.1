@@ -12,20 +12,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Model.Jogador;
-
+import Model.Dealer;
 import Model.GameManager;
 
 public class NewJPanelDealer extends JPanel {
 
 	private Image imgBkg;
 	private Image deck;
+	private Image back;
 	private Image imgCoin1;
 	private Image imgCoin5;
 	private Image imgCoin10;
 	private Image imgCoin20;
 	private Image imgCoin50;
 	private Image imgCoin100;
-	Jogador player;
+	Dealer dealer;
 	private JButton JButtonQuit = new JButton("Quit");
 	private JButton JButtonClear = new JButton("Clear");
 	private JButton JButtonSave = new JButton("Save");
@@ -38,6 +39,7 @@ public class NewJPanelDealer extends JPanel {
 		
 		imgBkg = readImage("Resources/blackjackBKG.png");
 		deck = readImage("Resources/deck1.gif");
+		back = readImage("Resources/deck2.gif");
 		imgCoin1 = readImage("Resources/ficha 1$.png");
 		imgCoin5 = readImage("Resources/ficha 5$.png");
 		imgCoin10 = readImage("Resources/ficha 10$.png");
@@ -93,7 +95,16 @@ public class NewJPanelDealer extends JPanel {
 		G.drawImage(this.imgCoin20, 425, 350, 50, 50, getFocusCycleRootAncestor());
 		G.drawImage(this.imgCoin50, 325, 350, 50, 50, getFocusCycleRootAncestor());
 		G.drawImage(this.imgCoin100, 225, 350, 50, 50, getFocusCycleRootAncestor());
+		
+		for (int i = 0; i < dealer.getMao().size(); i++)
+		{
+			System.out.println(dealer.getMao().get(i).GetIndex());
+			G.drawImage(readImage("Resources/" + dealer.getMao().get(i).GetIndex() + ".gif"), i*120 + 300, 110, 73, 97, getFocusCycleRootAncestor());				
+		}
+		
+		G.drawImage(this.back, 300, 110, 73, 97, getFocusCycleRootAncestor());
 	}
+	
 	
 	private Image readImage(String ImgName)
 	{
@@ -106,6 +117,11 @@ public class NewJPanelDealer extends JPanel {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public void setDealer(Dealer dealer) {
+		// TODO Auto-generated method stub
+		this.dealer = dealer;
 	}
 
 }

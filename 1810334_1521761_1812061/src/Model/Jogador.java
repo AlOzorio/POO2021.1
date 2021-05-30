@@ -12,6 +12,7 @@ public class Jogador
 	private int pontos;
 	private int totalBet;
 	private boolean dealt;
+	private boolean out;
 	
 	public Jogador()
 	{
@@ -21,6 +22,7 @@ public class Jogador
 		this.ficha = new ArrayList<Ficha>();
 		this.totalBet = 0;
 		this.dealt = false;
+		this.out = false;
 	}
 	
 	public void addCarta(Carta carta)
@@ -115,6 +117,16 @@ public class Jogador
 	public void setDealt(Boolean valor)
 	{
 		this.dealt = valor;
+	}
+	
+	public boolean getOut()
+	{
+		return this.out;
+	}
+	
+	public void setOut(Boolean valor)
+	{
+		this.out = valor;
 	}
 }
 

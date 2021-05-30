@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
+import Model.Dealer;
 import Model.GameManager;
 
 public class NewJFrameDealer extends JFrame {
@@ -12,7 +13,7 @@ public class NewJFrameDealer extends JFrame {
 	public GameManager GameManager;
 	NewJPanelDealer p;
 	
-	public NewJFrameDealer(GameManager gameManager)
+	public NewJFrameDealer(Dealer dealer, GameManager gameManager)
 	{
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension screenSize = tk.getScreenSize();
@@ -22,6 +23,7 @@ public class NewJFrameDealer extends JFrame {
 		this.GameManager = gameManager;
 		p = new NewJPanelDealer(this.GameManager);
 		p.setBorder(null);
+		p.setDealer(dealer);
 		getContentPane().add(p);
 		
 	}
