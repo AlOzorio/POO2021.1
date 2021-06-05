@@ -1,6 +1,8 @@
 package View;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -16,14 +18,14 @@ public class NewJPanelPlayer extends JPanel
 	private Image imgBkg;
 	private Image cardTest;
 	Jogador player;
-	private JButton JButtonDeal = new JButton("Deal");
-	private JButton JButtonHit = new JButton("Hit");
-	private JButton JButtonSplit = new JButton("Split");
-	private JButton JButtonSurrender = new JButton("Surrender");
-	private JButton JButtonStand = new JButton("Stand");
-	private JButton JButtonDouble = new JButton("Double");
+	public JButton JButtonDeal = new JButton("Deal");
+	public JButton JButtonHit = new JButton("Hit");
+	public JButton JButtonSplit = new JButton("Split");
+	public JButton JButtonSurrender = new JButton("Surrender");
+	public JButton JButtonStand = new JButton("Stand");
+	public JButton JButtonDouble = new JButton("Double");
 	private JLabel JLabelBet = new JLabel("Aposta = 0");
-	private JLabel JLabelCredits = new JLabel("Creditos = 250");
+	private JLabel JLabelCredits = new JLabel("Creditos = 500");
 	private JLabel JLabelSum = new JLabel("Soma das cartas = 0");
 	GameManager GameManager;
 	
@@ -49,6 +51,13 @@ public class NewJPanelPlayer extends JPanel
 		JButtonList.add(JButtonSurrender);
 		JButtonList.add(JButtonStand);
 		JButtonList.add(JButtonDouble);
+
+		//JButtonDeal.setEnabled(false);
+		JButtonHit.setEnabled(false);
+		JButtonSplit.setEnabled(false);
+		JButtonSurrender.setEnabled(false);
+		JButtonStand.setEnabled(false);
+		JButtonDouble.setEnabled(false);
 		
 		for (int i = 0; i < JButtonList.size(); i++) {
 			JButtonList.get(i).setVisible(true);
@@ -90,15 +99,15 @@ public class NewJPanelPlayer extends JPanel
 	}
 
 	private void ButtonClickSurrender() {
-	}
-
-	private void ButtonClickSplit() {
 		// TODO Auto-generated method stub
 		if (this == GameManager.jogadoresInterface.get(GameManager.turn).p) {
 			GameManager.Surrender();
 			this.repaint();
 			
 		}
+	}
+
+	private void ButtonClickSplit() {
 	}
 
 	private void ButtonClickHit() {
@@ -115,6 +124,7 @@ public class NewJPanelPlayer extends JPanel
 		// TODO Auto-generated method stub
 		if (this == GameManager.jogadoresInterface.get(GameManager.turn).p) {
 			GameManager.Deal();
+			this.JButtonHit.setEnabled(true);
 			this.repaint();
 			
 		}
@@ -146,10 +156,16 @@ public class NewJPanelPlayer extends JPanel
 		return null;
 	}
 
-	public void setPlayer(Jogador player) {
+	public void setPlayer(Jogador player) 
+	{
 		// TODO Auto-generated method stub
 		this.player = player;
 	}
 	
+	public void reseJButtons()
+	{
+		JButtonDeal.setEnabled(true);
+		
+	}
 
 }

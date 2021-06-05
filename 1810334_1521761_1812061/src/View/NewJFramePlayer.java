@@ -1,6 +1,9 @@
 package View;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.*;
 
 import Model.GameManager;
@@ -8,7 +11,7 @@ import Model.Jogador;
 
 public class NewJFramePlayer extends JFrame 
 { 
-	NewJPanelPlayer p;
+	public NewJPanelPlayer p;
 	public GameManager GameManager;
 	
 	public NewJFramePlayer(Jogador player, GameManager gameManager)
@@ -17,6 +20,7 @@ public class NewJFramePlayer extends JFrame
 		Dimension screenSize = tk.getScreenSize();
 		setSize(1000, 690);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
 		setLocation(screenSize.width/2 - 500, screenSize.height/2 - 350);
 		this.GameManager = gameManager;
 		p = new NewJPanelPlayer(this.GameManager);

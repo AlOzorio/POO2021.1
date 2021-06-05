@@ -2,6 +2,8 @@ package View;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,6 +50,16 @@ public class NewJPanelDealer extends JPanel {
 		imgCoin100 = readImage("Resources/ficha 100$.png");
 		this.setLayout(null);
 		
+		addMouseListener(new MouseAdapter()
+			{
+				public void mousePressed(MouseEvent e)
+				{
+					//System.out.println(e.getX() + "/" + e.getY());
+					mouseClick(e.getX(), e.getY());
+				}
+			}
+		);
+		
 		JButtonQuit.addActionListener(e -> ButtonClickQuit());
 		JButtonClear.addActionListener(e -> ButtonClickClear());
 		JButtonSave.addActionListener(e -> ButtonClickSave());
@@ -87,6 +99,7 @@ public class NewJPanelDealer extends JPanel {
 	public void paintComponent(Graphics G)
 	{
 		super.paintComponent(G);
+		//drawImage(img,xpos,ypos,width,height)
 		G.drawImage(this.imgBkg, 0, 0, 1000, 650, getFocusCycleRootAncestor());
 		G.drawImage(this.deck, 40, 200, 73, 97, getFocusCycleRootAncestor());
 		G.drawImage(this.imgCoin1, 725, 350, 50, 50, getFocusCycleRootAncestor());
@@ -122,6 +135,34 @@ public class NewJPanelDealer extends JPanel {
 	public void setDealer(Dealer dealer) {
 		// TODO Auto-generated method stub
 		this.dealer = dealer;
+	}
+	
+	private void mouseClick(int x, int y)
+	{
+		if ((x >= 725 && x <= 725 + 50) && (y >= 350 && y <= 350 + 50)) 
+		{
+			System.out.println("Clicou na ficha de valor 1");
+		}
+		if ((x >= 625 && x <= 625 + 50) && (y >= 350 && y <= 350 + 50)) 
+		{
+			System.out.println("Clicou na ficha de valor 5");
+		}
+		if ((x >= 525 && x <= 525 + 50) && (y >= 350 && y <= 350 + 50)) 
+		{
+			System.out.println("Clicou na ficha de valor 10");
+		}
+		if ((x >= 425 && x <= 425 + 50) && (y >= 350 && y <= 350 + 50)) 
+		{
+			System.out.println("Clicou na ficha de valor 20");
+		}
+		if ((x >= 325 && x <= 325 + 50) && (y >= 350 && y <= 350 + 50)) 
+		{
+			System.out.println("Clicou na ficha de valor 50");
+		}
+		if ((x >= 225 && x <= 225 + 50) && (y >= 350 && y <= 350 + 50)) 
+		{
+			System.out.println("Clicou na ficha de valor 100");
+		}
 	}
 
 }

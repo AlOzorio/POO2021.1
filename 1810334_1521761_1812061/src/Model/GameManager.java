@@ -16,7 +16,7 @@ public class GameManager
 	public static ArrayList<Jogador> jogadores = new ArrayList<Jogador>();
 	public static ArrayList<NewJFramePlayer> jogadoresInterface = new ArrayList<NewJFramePlayer>();
 	public NewJFrameDealer windowDealer;
-	public ArrayList<Ficha> prizePool = new ArrayList<Ficha>();
+	public float prizePool = 0;
 	public Deck deck = new Deck();
 	public Jogador currentPlayer;
 	public Dealer dealer; 
@@ -41,17 +41,7 @@ public class GameManager
 		windowDealer.setVisible(true);
 		
 		// Reseta o prizepool
-		FichasPilha = new Ficha(1,0);
-		prizePool.add(FichasPilha);
-		FichasPilha = new Ficha(5,0);
-		prizePool.add(FichasPilha);
-		FichasPilha = new Ficha(10,0);
-		prizePool.add(FichasPilha);
-		FichasPilha = new Ficha(20,0);
-		prizePool.add(FichasPilha);
-		FichasPilha = new Ficha(50,0);
-		prizePool.add(FichasPilha);
-		FichasPilha = new Ficha(100,0);
+		prizePool = 0;
 		
 		currentPlayer = jogadores.get(turn);
 		deck.IniciaBaralho();
@@ -64,61 +54,47 @@ public class GameManager
 	
 	public void AddToPrizePool(int value)
 	{
-		if (currentPlayer.getTotalBet() + value < 100)
+		if (currentPlayer.getTotalBet() + value < 100 && currentPlayer.getDealt() == false)
 		{
+			prizePool += value;
 			currentPlayer.setTotalBet(currentPlayer.getTotalBet() + value);
-			
-			if(value == 1)
-			{
-				prizePool.get(0).setQuantidade(prizePool.get(0).getQuantidade() + 1);
-			}
-			else if (value == 5) 
-			{
-				prizePool.get(1).setQuantidade(prizePool.get(1).getQuantidade() + 1);
-			}
-			else if (value == 10) 
-			{
-				prizePool.get(2).setQuantidade(prizePool.get(2).getQuantidade() + 1);
-			}
-			else if (value == 20) 
-			{
-				prizePool.get(3).setQuantidade(prizePool.get(3).getQuantidade() + 1);
-			}
-			else if (value == 50) 
-			{
-				prizePool.get(4).setQuantidade(prizePool.get(4).getQuantidade() + 1);
-			}
-			else if (value == 100) 
-			{
-				prizePool.get(5).setQuantidade(prizePool.get(5).getQuantidade() + 1);
-			}
 		}
 		
 		if(currentPlayer.getTotalBet() + value >= 20 && currentPlayer.getDealt() == false)
 		{
-			//habilita botao de deal
+			jogadoresInterface.get(turn).p.JButtonDeal.setEnabled(true);
 		}
 		else 
 		{
-			//desabilita botao de deal
+			jogadoresInterface.get(turn).p.JButtonDeal.setEnabled(false);
 		}
 	}
 
 	public void Deal()
 	{
-		currentPlayer.addCarta(deck.Draw());
-		currentPlayer.addCarta(deck.Draw());
-		currentPlayer.setDealt(true);
-		if (turn == jogadores.size() - 1) 
+		if(currentPlayer.getDealt() == false) 
 		{
-			turn = 0;
+			currentPlayer.addCarta(deck.Draw());
+			currentPlayer.addCarta(deck.Draw());
+			currentPlayer.setDealt(true);
+			if (turn == jogadores.size() - 1) 
+			{
+				turn = 0;
+			}
+			else 
+			{
+				turn++;
+			}
+			currentPlayer = jogadores.get(turn); 
+			jogadoresInterface.get(turn).p.JButtonDeal.setEnabled(false);
+			
+			jogadoresInterface.get(turn).p.JButtonHit.setEnabled(true);
+			jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(true);
+			jogadoresInterface.get(turn).p.JButtonStand.setEnabled(true);
+			jogadoresInterface.get(turn).p.JButtonSurrender.setEnabled(true);
+			
+			JOptionPane.showMessageDialog(null,"Jogador deu Deal","turno",JOptionPane.INFORMATION_MESSAGE);
 		}
-		else 
-		{
-			turn++;
-		}
-		currentPlayer = jogadores.get(turn); 
-		JOptionPane.showMessageDialog(null,"Jogador deu Deal","turno",JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public void Hit()
@@ -136,7 +112,9 @@ public class GameManager
 					winner = jogadores.get(i);
 				}
 			}
-			
+			JOptionPane.showMessageDialog(null,"Jogador deu Hit","turno",JOptionPane.INFORMATION_MESSAGE);
+			jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(false);
+			jogadoresInterface.get(turn).p.JButtonSurrender.setEnabled(false);
 			Carta topDeck = deck.Draw();
 			currentPlayer.addCarta(topDeck);
 		}
@@ -144,8 +122,10 @@ public class GameManager
 		if(jogadores.get(turn).getPontos() > 21)
 		{
 			jogadores.get(turn).setOut(true);
+			jogadoresInterface.get(turn).p.JButtonHit.setEnabled(false);
+			
 		}
-		JOptionPane.showMessageDialog(null,"Jogador deu Hit","turno",JOptionPane.INFORMATION_MESSAGE);
+		
 	}
 	
 	public void Stand()
@@ -161,19 +141,26 @@ public class GameManager
 			turn++;
 			currentPlayer = jogadores.get(turn); 
 		}
+		jogadoresInterface.get(turn).p.JButtonHit.setEnabled(false);
+		jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(false);
+		jogadoresInterface.get(turn).p.JButtonStand.setEnabled(false);
+		jogadoresInterface.get(turn).p.JButtonSurrender.setEnabled(false);
 	}
 	
 	public void Double()
 	{
-		Ficha FichasPilha;
-		int betToReach = currentPlayer.getTotalBet();
-		
-		if (currentPlayer.getCreditos() >= currentPlayer.getTotalBet())
+		if (currentPlayer.getCreditos() >= currentPlayer.getTotalBet() && currentPlayer.getMao().size() == 2)
 		{
 			currentPlayer.setCreditos(currentPlayer.getCreditos() - currentPlayer.getTotalBet());
 			currentPlayer.addToBet(currentPlayer.getTotalBet());
 			currentPlayer.addCarta(deck.Draw());
-			Stand();
+			if(currentPlayer.getPontos() > 21)
+			{
+				currentPlayer.setOut(true);
+			}
+			jogadoresInterface.get(turn).p.JButtonHit.setEnabled(false);
+			jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(false);
+			jogadoresInterface.get(turn).p.JButtonSurrender.setEnabled(false);
 		}
 	}
 	
@@ -200,7 +187,9 @@ public class GameManager
 			
 			jogadores.get(i).setMao(new ArrayList<Carta>());
 			jogadores.get(i).setDealt(false);
+			jogadores.get(i).setOut(false);
 			jogadores.get(i).setPontos(0);
+			jogadoresInterface.get(i).p.reseJButtons();
 		}
 		
 		for(int i = 0; i < dealer.getMao().size(); i++)
@@ -222,7 +211,12 @@ public class GameManager
 	
 	public void Surrender()
 	{
-		
+		currentPlayer.setOut(true);
+		currentPlayer.setCreditos(currentPlayer.getTotalBet()/2 + currentPlayer.getCreditos());
+		prizePool -= currentPlayer.getTotalBet()/2;
+		jogadoresInterface.get(turn).p.JButtonHit.setEnabled(false);
+		jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(false);
+		jogadoresInterface.get(turn).p.JButtonSurrender.setEnabled(false);
 	}
 	
 	public void Quit()
