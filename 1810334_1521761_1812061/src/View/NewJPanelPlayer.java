@@ -114,7 +114,6 @@ public class NewJPanelPlayer extends JPanel
 	private void ButtonClickDeal() {
 		// TODO Auto-generated method stub
 		if (this == GameManager.jogadoresInterface.get(GameManager.turn).p) {
-			JOptionPane.showMessageDialog(null,"Jogador de Deal","turno",JOptionPane.INFORMATION_MESSAGE);
 			GameManager.Deal();
 			this.repaint();
 			

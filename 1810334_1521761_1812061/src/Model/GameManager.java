@@ -29,7 +29,6 @@ public class GameManager
 		for (int i = 0; i < playerCount; i++) 
 		{
 			Jogador player = new Jogador();
-			player.criarFichas();
 			jogadores.add(player);
 			NewJFramePlayer playerInterface = new NewJFramePlayer(player, this);
 			playerInterface.setVisible(true);
@@ -151,11 +150,11 @@ public class GameManager
 	
 	public void Stand()
 	{
-		JOptionPane.showMessageDialog(null,"Jogador deu Hit","turno",JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null,"Jogador deu Stand","turno",JOptionPane.INFORMATION_MESSAGE);
 		
 		if(turn == jogadores.size() - 1) //Se for o ultimo jogador, acabou a rodada
 		{
-			DealerTurn()
+			DealerTurn();
 		}
 		else
 		{
@@ -169,111 +168,12 @@ public class GameManager
 		Ficha FichasPilha;
 		int betToReach = currentPlayer.getTotalBet();
 		
-		currentPlayer.addCarta(deck.Draw());
-		ArrayList<Ficha> newPool = new ArrayList<Ficha>();
-		
-		FichasPilha = new Ficha(1,0);
-		newPool.add(FichasPilha);
-		FichasPilha = new Ficha(5,0);
-		newPool.add(FichasPilha);
-		FichasPilha = new Ficha(10,0);
-		newPool.add(FichasPilha);
-		FichasPilha = new Ficha(20,0);
-		newPool.add(FichasPilha);
-		FichasPilha = new Ficha(50,0);
-		newPool.add(FichasPilha);
-		FichasPilha = new Ficha(100,0);
-		
-		
-		if(betToReach == 100)
+		if (currentPlayer.getCreditos() >= currentPlayer.getTotalBet())
 		{
-			if (currentPlayer.getFicha().get(5).getQuantidade() > 0) 
-			{
-				currentPlayer.getFicha().get(5).setQuantidade(currentPlayer.getFicha().get(5).getQuantidade() - 1);
-				betToReach -= 100;
-				newPool.get(5).setQuantidade(newPool.get(5).getQuantidade() + 1);
-			}
-		}
-		if(betToReach >= 50)
-		{
-			while(betToReach >= 50)
-			{
-				if (currentPlayer.getFicha().get(4).getQuantidade() > 0) 
-				{
-					currentPlayer.getFicha().get(4).setQuantidade(currentPlayer.getFicha().get(4).getQuantidade() - 1);
-					betToReach -= 50;
-					newPool.get(4).setQuantidade(newPool.get(4).getQuantidade() + 1);
-				}
-				
-			}
-		}
-		if(betToReach >= 20)
-		{
-			while(betToReach >= 20)
-			{
-				if (currentPlayer.getFicha().get(3).getQuantidade() > 0) 
-				{
-					currentPlayer.getFicha().get(3).setQuantidade(currentPlayer.getFicha().get(3).getQuantidade() - 1);
-					betToReach -= 20;
-					newPool.get(3).setQuantidade(newPool.get(3).getQuantidade() + 1);
-				}
-				
-			}
-		}
-		if(betToReach >= 10)
-		{
-			while(betToReach >= 10)
-			{
-				if (currentPlayer.getFicha().get(2).getQuantidade() > 0) 
-				{
-					currentPlayer.getFicha().get(2).setQuantidade(currentPlayer.getFicha().get(2).getQuantidade() - 1);
-					betToReach -= 10;
-					newPool.get(2).setQuantidade(newPool.get(2).getQuantidade() + 1);
-				}
-				
-			}
-		}
-		if(betToReach >= 5)
-		{
-			while(betToReach >= 5)
-			{
-				if (currentPlayer.getFicha().get(1).getQuantidade() > 0) 
-				{
-					currentPlayer.getFicha().get(1).setQuantidade(currentPlayer.getFicha().get(1).getQuantidade() - 1);
-					betToReach -= 5;
-					newPool.get(1).setQuantidade(newPool.get(1).getQuantidade() + 1);
-				}
-				
-			}
-		}
-		if(betToReach >= 1)
-		{
-			while(betToReach >= 1)
-			{
-				if (currentPlayer.getFicha().get(0).getQuantidade() > 0) 
-				{
-					currentPlayer.getFicha().get(0).setQuantidade(currentPlayer.getFicha().get(0).getQuantidade() - 1);
-					betToReach -= 1;
-					newPool.get(0).setQuantidade(newPool.get(0).getQuantidade() + 1);
-				}
-				
-			}
-		}
-		
-		if (betToReach == 0)
-		{
-			for (int i = 0; i < newPool.size(); i++)
-			{
-				prizePool.get(i).setQuantidade(prizePool.get(i).getQuantidade() + newPool.get(i).getQuantidade());
-			}
-		}
-		else 
-		{
-			// Não pode dobrar a aposta, devolver as fichas ao jogador
-			for (int i = 0; i < newPool.size(); i++)
-			{
-				currentPlayer.getFicha().get(i).setQuantidade(currentPlayer.getFicha().get(i).getQuantidade() + newPool.get(i).getQuantidade());
-			}
+			currentPlayer.setCreditos(currentPlayer.getCreditos() - currentPlayer.getTotalBet());
+			currentPlayer.addToBet(currentPlayer.getTotalBet());
+			currentPlayer.addCarta(deck.Draw());
+			Stand();
 		}
 	}
 	

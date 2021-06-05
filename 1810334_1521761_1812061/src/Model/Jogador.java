@@ -8,7 +8,7 @@ public class Jogador
 
 	private String nome;
 	private ArrayList<Carta> mao;
-	private ArrayList<Ficha> ficha;
+	private float creditos;
 	private int pontos;
 	private int totalBet;
 	private boolean dealt;
@@ -19,7 +19,7 @@ public class Jogador
 		this.nome = null;
 		this.pontos = 0;
 		this.mao = new ArrayList<Carta>();
-		this.ficha = new ArrayList<Ficha>();
+		this.creditos = 500;
 		this.totalBet = 0;
 		this.dealt = false;
 		this.out = false;
@@ -40,23 +40,6 @@ public class Jogador
 				}
 			}
 		}
-	}
-	
-	public void criarFichas()
-	{
-		Ficha f;
-		f = new Ficha(100, 2);
-		ficha.add(f);
-		f = new Ficha(50, 2);
-		ficha.add(f);
-		f = new Ficha(20, 5);
-		ficha.add(f);
-		f = new Ficha(10, 5);
-		ficha.add(f);
-		f = new Ficha(5, 8);
-		ficha.add(f);
-		f = new Ficha(1, 10);
-		ficha.add(f);
 	}
 	
 	public String getNome()
@@ -89,14 +72,14 @@ public class Jogador
 		this.pontos = pontos;
 	}
 	
-	public ArrayList<Ficha> getFicha()
+	public float getCreditos()
 	{
-		return ficha;
+		return creditos;
 	}
 	
-	public void setFicha(ArrayList<Ficha> ficha)
+	public void setCreditos(float credito)
 	{
-		this.ficha = ficha;
+		this.creditos = credito;
 	}
 	
 	public int getTotalBet()
@@ -107,6 +90,11 @@ public class Jogador
 	public void setTotalBet(int valor)
 	{
 		this.totalBet = valor;
+	}
+	
+	public void addToBet(int valor)
+	{
+		this.totalBet += valor;
 	}
 	
 	public boolean getDealt()
