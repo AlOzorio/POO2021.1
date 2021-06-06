@@ -24,8 +24,8 @@ public class NewJPanelPlayer extends JPanel
 	public JButton JButtonSurrender = new JButton("Surrender");
 	public JButton JButtonStand = new JButton("Stand");
 	public JButton JButtonDouble = new JButton("Double");
-	private JLabel JLabelBet = new JLabel("Aposta = 0");
-	private JLabel JLabelCredits = new JLabel("Creditos = 500");
+	public JLabel JLabelBet = new JLabel("Aposta = 0");
+	public JLabel JLabelCredits = new JLabel("Creditos = 500");
 	private JLabel JLabelSum = new JLabel("Soma das cartas = 0");
 	GameManager GameManager;
 	
@@ -52,7 +52,7 @@ public class NewJPanelPlayer extends JPanel
 		JButtonList.add(JButtonStand);
 		JButtonList.add(JButtonDouble);
 
-		//JButtonDeal.setEnabled(false);
+		JButtonDeal.setEnabled(false);
 		JButtonHit.setEnabled(false);
 		JButtonSplit.setEnabled(false);
 		JButtonSurrender.setEnabled(false);
@@ -164,8 +164,7 @@ public class NewJPanelPlayer extends JPanel
 	
 	public void reseJButtons()
 	{
-		JButtonDeal.setEnabled(true);
-		
+		JButtonDeal.setEnabled(true);	
 	}
 
 }

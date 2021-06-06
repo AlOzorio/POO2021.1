@@ -53,14 +53,15 @@ public class GameManager
 	//region Player 
 	
 	public void AddToPrizePool(int value)
-	{
-		if (currentPlayer.getTotalBet() + value < 100 && currentPlayer.getDealt() == false)
+	{		
+		if (currentPlayer.getTotalBet() + value <= 100 && currentPlayer.getDealt() == false)
 		{
 			prizePool += value;
 			currentPlayer.setTotalBet(currentPlayer.getTotalBet() + value);
+			currentPlayer.setCreditos(currentPlayer.getCreditos() - value);
 		}
 		
-		if(currentPlayer.getTotalBet() + value >= 20 && currentPlayer.getDealt() == false)
+		if(currentPlayer.getTotalBet() >= 20 && currentPlayer.getDealt() == false)
 		{
 			jogadoresInterface.get(turn).p.JButtonDeal.setEnabled(true);
 		}

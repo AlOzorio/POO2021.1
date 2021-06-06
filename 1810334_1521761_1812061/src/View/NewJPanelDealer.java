@@ -142,27 +142,36 @@ public class NewJPanelDealer extends JPanel {
 		if ((x >= 725 && x <= 725 + 50) && (y >= 350 && y <= 350 + 50)) 
 		{
 			System.out.println("Clicou na ficha de valor 1");
+			GameManager.AddToPrizePool(1);
 		}
 		if ((x >= 625 && x <= 625 + 50) && (y >= 350 && y <= 350 + 50)) 
 		{
 			System.out.println("Clicou na ficha de valor 5");
+			GameManager.AddToPrizePool(5);
 		}
 		if ((x >= 525 && x <= 525 + 50) && (y >= 350 && y <= 350 + 50)) 
 		{
 			System.out.println("Clicou na ficha de valor 10");
+			GameManager.AddToPrizePool(10);
 		}
 		if ((x >= 425 && x <= 425 + 50) && (y >= 350 && y <= 350 + 50)) 
 		{
 			System.out.println("Clicou na ficha de valor 20");
+			GameManager.AddToPrizePool(20);
 		}
 		if ((x >= 325 && x <= 325 + 50) && (y >= 350 && y <= 350 + 50)) 
 		{
 			System.out.println("Clicou na ficha de valor 50");
+			GameManager.AddToPrizePool(50);
 		}
 		if ((x >= 225 && x <= 225 + 50) && (y >= 350 && y <= 350 + 50)) 
 		{
 			System.out.println("Clicou na ficha de valor 100");
+			GameManager.AddToPrizePool(100);
 		}
+		
+		GameManager.jogadoresInterface.get(GameManager.turn).p.JLabelBet.setText("Aposta = " + String.valueOf(GameManager.currentPlayer.getTotalBet()));
+		GameManager.jogadoresInterface.get(GameManager.turn).p.JLabelCredits.setText("Creditos = " + String.valueOf(GameManager.currentPlayer.getCreditos()));
 	}
 
 }
