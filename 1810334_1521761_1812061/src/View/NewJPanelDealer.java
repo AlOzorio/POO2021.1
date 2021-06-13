@@ -114,12 +114,12 @@ public class NewJPanelDealer extends JPanel {
 		G.drawImage(this.imgCoin50, 325, 350, 50, 50, getFocusCycleRootAncestor());
 		G.drawImage(this.imgCoin100, 225, 350, 50, 50, getFocusCycleRootAncestor());
 		
-		for (int i = 0; i < dealer.getMao().size(); i++)
+		for (int i = 0; i < dealer.getMao(0).getCartas().size(); i++)
 		{
-			System.out.println(dealer.getMao().get(i).GetIndex());
-			G.drawImage(readImage("Resources/" + dealer.getMao().get(i).GetIndex() + ".gif"), i*120 + 300, 110, 73, 97, getFocusCycleRootAncestor());				
+			System.out.println(dealer.getMao(0).getCartas().get(i).GetIndex());
+			G.drawImage(readImage("Resources/" + dealer.getMao(0).getCartas().get(i).GetIndex() + ".gif"), i*120 + 300, 110, 73, 97, getFocusCycleRootAncestor());				
 		}
-		JLabelSum.setText("Soma das cartas = " + String.valueOf(dealer.getPontos()));
+		JLabelSum.setText("Soma das cartas = " + String.valueOf(dealer.getPontos(0)));
 		
 		if(isHidden == true)
 		{
@@ -178,10 +178,11 @@ public class NewJPanelDealer extends JPanel {
 			System.out.println("Clicou na ficha de valor 100");
 			GameManager.AddToPrizePool(100);
 		}
-		
+
 		JLabelPrizePool.setText("Aposta total = " + String.valueOf(GameManager.prizePool));
-		GameManager.jogadoresInterface.get(GameManager.turn).p.JLabelBet.setText("Aposta = " + String.valueOf(GameManager.currentPlayer.getTotalBet()));
-		GameManager.jogadoresInterface.get(GameManager.turn).p.JLabelCredits.setText("Creditos = " + String.valueOf(GameManager.currentPlayer.getCreditos()));
+		System.out.println("valor do turno = " + String.valueOf(GameManager.turn));
+		GameManager.jogadoresInterface.get(GameManager.turn).getInterface(0).p.JLabelBet.setText("Aposta = " + String.valueOf(GameManager.currentPlayer.getTotalBet(0)));
+		GameManager.jogadoresInterface.get(GameManager.turn).getInterface(0).p.JLabelCredits.setText("Creditos = " + String.valueOf(GameManager.currentPlayer.getCreditos()));
 	}
 
 	public Boolean getIsHidden()
@@ -199,7 +200,7 @@ public class NewJPanelDealer extends JPanel {
 		if(isHidden == true)
 		{
 			this.setIsHidden(false);
-			dealer.setPontos(dealer.getPontos() + dealer.getMao().get(0).GetValue());
+			dealer.setPontos(dealer.getPontos(0) + dealer.getMao(0).getCartas().get(0).GetValue(), 0);
 			repaint();
 		}
 	}

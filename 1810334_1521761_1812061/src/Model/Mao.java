@@ -33,7 +33,7 @@ public class Mao
 		}
 	}
 	
-	public ArrayList<Carta> getMao()
+	public ArrayList<Carta> getCartas()
 	{
 		return cartas;
 	}

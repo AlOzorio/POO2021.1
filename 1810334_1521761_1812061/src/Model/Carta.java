@@ -23,8 +23,6 @@ public class Carta
 		return this.naipe;
 	}
 
-	
-	
 	public String GetIndex()
 	{
 		if (this.valor < 10 && this.valor > 1) {

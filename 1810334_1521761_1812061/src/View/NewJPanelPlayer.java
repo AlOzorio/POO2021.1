@@ -27,13 +27,15 @@ public class NewJPanelPlayer extends JPanel
 	public JLabel JLabelBet = new JLabel("Aposta = 0");
 	public JLabel JLabelCredits = new JLabel("Creditos = 500");
 	private JLabel JLabelSum = new JLabel("Soma das cartas = 0");
+	private int mao_number;
 	GameManager GameManager;
 	
-	public NewJPanelPlayer(GameManager gameManager) 
+	public NewJPanelPlayer(GameManager gameManager, int mao) 
 	{
 		imgBkg = readImage("Resources/blackjackBKG.png");
 		cardTest = readImage("Resources/2c.gif");
 		this.setLayout(null);
+		this.mao_number = mao;
 		
 		GameManager = gameManager;
 
@@ -79,7 +81,8 @@ public class NewJPanelPlayer extends JPanel
 	
 	private void ButtonClickDouble() {
 		// TODO Auto-generated method stub
-		if (this == GameManager.jogadoresInterface.get(GameManager.turn).p) {
+		if (this == GameManager.jogadoresInterface.get(GameManager.turn).getInterface(GameManager.n_mao).p) 
+		{
 			GameManager.Double();
 			this.repaint();
 			
@@ -88,7 +91,7 @@ public class NewJPanelPlayer extends JPanel
 
 	private void ButtonClickStand() {
 		// TODO Auto-generated method stub
-		if (this == GameManager.jogadoresInterface.get(GameManager.turn).p) 
+		if (this == GameManager.jogadoresInterface.get(GameManager.turn).getInterface(GameManager.n_mao).p) 
 		{
 			if (GameManager.jogadores.get(GameManager.turn).getDealt() == true) 
 			{
@@ -100,7 +103,8 @@ public class NewJPanelPlayer extends JPanel
 
 	private void ButtonClickSurrender() {
 		// TODO Auto-generated method stub
-		if (this == GameManager.jogadoresInterface.get(GameManager.turn).p) {
+		if (this == GameManager.jogadoresInterface.get(GameManager.turn).getInterface(GameManager.n_mao).p) 
+		{
 			GameManager.Surrender();
 			this.repaint();
 			
@@ -109,7 +113,7 @@ public class NewJPanelPlayer extends JPanel
 
 	private void ButtonClickSplit() 
 	{
-		if (this == GameManager.jogadoresInterface.get(GameManager.turn).p) 
+		if (this == GameManager.jogadoresInterface.get(GameManager.turn).getInterface(GameManager.n_mao).p) 
 		{
 			GameManager.Split();
 			this.repaint();
@@ -118,7 +122,8 @@ public class NewJPanelPlayer extends JPanel
 
 	private void ButtonClickHit() {
 		// TODO Auto-generated method stub
-		if (this == GameManager.jogadoresInterface.get(GameManager.turn).p) {
+		if (this == GameManager.jogadoresInterface.get(GameManager.turn).getInterface(GameManager.n_mao).p) 
+		{
 			if (GameManager.jogadores.get(GameManager.turn).getDealt() == true) {
 				GameManager.Hit();
 				this.repaint();
@@ -128,7 +133,8 @@ public class NewJPanelPlayer extends JPanel
 
 	private void ButtonClickDeal() {
 		// TODO Auto-generated method stub
-		if (this == GameManager.jogadoresInterface.get(GameManager.turn).p) {
+		if (this == GameManager.jogadoresInterface.get(GameManager.turn).getInterface(GameManager.n_mao).p) 
+		{
 			GameManager.Deal();
 			this.JButtonHit.setEnabled(true);
 			this.repaint();
@@ -141,12 +147,14 @@ public class NewJPanelPlayer extends JPanel
 	{
 		super.paintComponent(G);
 		G.drawImage(this.imgBkg, 0, 0, 1000, 650, getFocusCycleRootAncestor());
-		for (int i = 0; i < player.getMao().size(); i++)
+		for (int i = 0; i < player.getMao(this.mao_number).getCartas().size(); i++)
 		{
-			System.out.println(player.getMao().get(i).GetIndex());
-			G.drawImage(readImage("Resources/" + player.getMao().get(i).GetIndex() + ".gif"), i*120 + 300, 400, 73, 97, getFocusCycleRootAncestor());	
+			System.out.println(player.getMao(this.mao_number).getCartas().get(i).GetIndex());
+			G.drawImage(readImage("Resources/" + player.getMao(this.mao_number).getCartas().get(i).GetIndex() + ".gif"), i*120 + 300, 400, 73, 97, getFocusCycleRootAncestor());	
 		}
-		JLabelSum.setText("Soma das cartas = " + String.valueOf(player.getPontos()));
+		JLabelSum.setText("Soma das cartas = " + String.valueOf(player.getPontos(this.mao_number)));
+		JLabelBet.setText("Aposta = " + String.valueOf(player.getTotalBet(this.mao_number)));
+		JLabelCredits.setText("Creditos = " + String.valueOf(player.getCreditos()));
 	}
 	
 	private Image readImage(String ImgName)
@@ -164,8 +172,12 @@ public class NewJPanelPlayer extends JPanel
 
 	public void setPlayer(Jogador player) 
 	{
-		// TODO Auto-generated method stub
 		this.player = player;
+	}
+
+	public Object getMao(int n_mao) 
+	{
+		return null;
 	}
 
 }

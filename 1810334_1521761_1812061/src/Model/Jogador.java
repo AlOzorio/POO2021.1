@@ -17,6 +17,7 @@ public class Jogador
 		this.creditos = 500;
 		this.dealt = false;
 		this.maos = new ArrayList<Mao>();
+		this.maos.add(new Mao());
 	}
 	
 	public int getMaoQtd()
@@ -39,9 +40,9 @@ public class Jogador
 		this.nome = nome;
 	}
 	
-	public ArrayList<Carta> getMao(int i)
+	public Mao getMao(int i)
 	{
-		return this.maos.get(i).getMao();
+		return this.maos.get(i);
 	}
 	
 	public void setMao(ArrayList<Carta> mao, int i) 
@@ -51,6 +52,7 @@ public class Jogador
 	
 	public int getPontos(int i) 
 	{
+		System.out.println("o tamanho da mao eh = " + String.valueOf(this.maos.size()));
 		return this.maos.get(i).getPontos();
 	}
 	
@@ -107,6 +109,25 @@ public class Jogador
 	public boolean getBlackjack(int i) 
 	{
 		return this.maos.get(i).getBlackjack();
+	}
+
+	public void split() {
+		// TODO Auto-generated method stub
+		this.maos.add(new Mao());
+		
+		this.getMao(1).getCartas().add(this.getMao(0).getCartas().get(1));
+		this.getMao(0).getCartas().remove(1);
+		
+		this.maos.get(0).setPontos(this.maos.get(0).getPontos()/2);
+		this.maos.get(1).setPontos(this.maos.get(0).getPontos());
+		
+		this.setCreditos(this.getCreditos() - this.maos.get(0).getTotalBet());
+		this.maos.get(1).setTotalBet(this.maos.get(0).getTotalBet());
+	}
+
+	public void removeMao(int i) {
+		// TODO Auto-generated method stub
+		this.maos.remove(i);
 	}
 }
 
