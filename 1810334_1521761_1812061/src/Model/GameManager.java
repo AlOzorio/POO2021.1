@@ -1,7 +1,12 @@
 package Model;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -411,16 +416,109 @@ public class GameManager
 	//endregion
 	
 	//region save
-	
-	
-	public void SaveGame()
-	{
 		
+	public void SaveGame() throws IOException
+	{
+		File saveFile = new File("partida.txt");
+		if(saveFile.createNewFile())
+		{
+			System.out.println("jogo salvo");
+		}
+		else
+		{
+			saveFile.delete();
+			saveFile.createNewFile();
+			System.out.println("save substituido");
+		}
+		
+		FileWriter writer = new FileWriter("partida.txt");
+		writer.write(String.valueOf(jogadores.size()) + "\n");
+		
+		writer.write(String.valueOf(dealer.getMao().size()) + "\n");
+		writer.write(String.valueOf(windowDealer.getIsHidden()) + "\n");
+		writer.write(String.valueOf(dealer.getPontos()) + "\n");
+		for(int i = 0; i < dealer.getMao().size(); i++)
+		{
+			writer.write(dealer.getMao().get(i).GetSuite() + "\n");
+			writer.write(String.valueOf(dealer.getMao().get(i).GetValue()) + "\n");
+			writer.write(dealer.getMao().get(i).GetName() + "\n");
+		}
+		
+		writer.write(String.valueOf(prizePool) + "\n");
+		writer.write(String.valueOf(turn) + "\n");
+		
+		
+		for(int i = 0; i < jogadores.size(); i++)
+		{
+			writer.write(String.valueOf(jogadores.get(i).getMao().size()) + "\n");
+			writer.write(String.valueOf(jogadores.get(i).getTotalBet()) + "\n");
+			writer.write(String.valueOf(jogadores.get(i).getCreditos()) + "\n");
+			
+			for(int j = 0; j < jogadores.get(i).getMao().size(); j++)
+			{
+				writer.write(jogadores.get(i).getMao().get(j).GetSuite() + "\n");
+				writer.write(String.valueOf(jogadores.get(i).getMao().get(j).GetValue()) + "\n");
+				writer.write(jogadores.get(i).getMao().get(j).GetName() + "\n");
+			}
+			
+			writer.write(String.valueOf(jogadoresInterface.get(i).p.JButtonDeal.isEnabled()) + "\n");
+			writer.write(String.valueOf(jogadoresInterface.get(i).p.JButtonHit.isEnabled()) + "\n");
+			writer.write(String.valueOf(jogadoresInterface.get(i).p.JButtonSplit.isEnabled()) + "\n");
+			writer.write(String.valueOf(jogadoresInterface.get(i).p.JButtonSurrender.isEnabled()) + "\n");
+			writer.write(String.valueOf(jogadoresInterface.get(i).p.JButtonStand.isEnabled()) + "\n");
+			writer.write(String.valueOf(jogadoresInterface.get(i).p.JButtonDouble.isEnabled()) + "\n");
+		}
+
+		
+		writer.close();
 	}
 	
-	public void LoadGame()
+	public void LoadGame() throws FileNotFoundException
 	{
+		File loadFile = new File("partida.txt");
+		Scanner reader = new Scanner(loadFile);
 		
+		int numPlayers = Integer.parseInt(reader.nextLine());		
+		NewGame(numPlayers);
+		
+		int dealerHand = Integer.parseInt(reader.nextLine());
+		windowDealer.setIsHiiden(Boolean.parseBoolean(reader.nextLine()));
+		windowDealer.getSumLabel().setText("Soma das cartas = " + Integer.parseInt(reader.nextLine()));
+		for(int i = 0; i < dealerHand; i++)
+		{
+			dealer.setDealt(true);
+			Carta newCard = new Carta(reader.nextLine(), Integer.parseInt(reader.nextLine()), reader.nextLine());
+			dealer.addCarta(newCard);
+		}
+		
+		prizePool = Float.parseFloat(reader.nextLine());
+		windowDealer.getPrizePoolLabel().setText("Aposta total = " + String.valueOf(prizePool));
+		turn = Integer.parseInt(reader.nextLine());
+		
+		for(int i = 0; i < numPlayers; i++)
+		{
+			int handSize = Integer.parseInt(reader.nextLine());
+			jogadores.get(i).setTotalBet(Integer.parseInt(reader.nextLine()));
+			jogadores.get(i).setCreditos(Float.parseFloat(reader.nextLine()));
+			jogadoresInterface.get(i).p.JLabelBet.setText("Aposta = " + String.valueOf(currentPlayer.getTotalBet()));
+			jogadoresInterface.get(i).p.JLabelCredits.setText("Creditos = " + String.valueOf(currentPlayer.getCreditos()));
+			
+			for(int j = 0; j < handSize; j++)
+			{
+				jogadores.get(i).setDealt(true);
+				Carta newCard = new Carta(reader.nextLine(), Integer.parseInt(reader.nextLine()), reader.nextLine());
+				jogadores.get(i).addCarta(newCard);
+			}
+			
+			jogadoresInterface.get(i).p.JButtonDeal.setEnabled(Boolean.parseBoolean(reader.nextLine()));
+			jogadoresInterface.get(i).p.JButtonHit.setEnabled(Boolean.parseBoolean(reader.nextLine()));
+			jogadoresInterface.get(i).p.JButtonSplit.setEnabled(Boolean.parseBoolean(reader.nextLine()));
+			jogadoresInterface.get(i).p.JButtonSurrender.setEnabled(Boolean.parseBoolean(reader.nextLine()));
+			jogadoresInterface.get(i).p.JButtonStand.setEnabled(Boolean.parseBoolean(reader.nextLine()));
+			jogadoresInterface.get(i).p.JButtonDouble.setEnabled(Boolean.parseBoolean(reader.nextLine()));
+		}
+		
+		RepaintAll();
 	}
 	
 	//endregion

@@ -18,12 +18,20 @@ public class Carta
 		return this.nome;
 	}
 
+	public void SetName(String nome)
+	{
+		this.nome = nome;
+	}
+	
 	public String GetSuite()
 	{
 		return this.naipe;
 	}
 
-	
+	public void SetSuite(String naipe)
+	{
+		this.naipe = naipe;
+	}
 	
 	public String GetIndex()
 	{
@@ -38,7 +46,6 @@ public class Carta
 		return this.valor;
 	}
 	
-	//A seguinte função abaixo serve para alterar o valor do as, quando necessário
 	public void SetValue(int newValue)
 	{
 		this.valor = newValue;

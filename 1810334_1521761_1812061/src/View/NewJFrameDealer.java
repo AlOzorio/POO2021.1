@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import Model.Dealer;
 import Model.GameManager;
@@ -51,5 +52,15 @@ public class NewJFrameDealer extends JFrame {
 	public void resetPrizePoolLabel()
 	{
 		p.getPrizePoolLabel().setText("Aposta total = " + String.valueOf(this.GameManager.prizePool));
+	}
+	
+	public JLabel getPrizePoolLabel()
+	{
+		return p.getPrizePoolLabel();
+	}
+	
+	public JLabel getSumLabel()
+	{
+		return p.getSumLabel();
 	}
 }

@@ -86,9 +86,16 @@ public class NewJPanelDealer extends JPanel {
 		
 	}
 	
-	private void ButtonClickSave() 
-	{
-		//Prox Iteracao
+	private void ButtonClickSave()
+	{		
+		try 
+		{
+			GameManager.SaveGame();
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	private void ButtonClickClear() 
@@ -216,6 +223,11 @@ public class NewJPanelDealer extends JPanel {
 	public JLabel getPrizePoolLabel()
 	{
 		return JLabelPrizePool;
+	}
+	
+	public JLabel getSumLabel()
+	{
+		return JLabelSum;
 	}
 
 }
