@@ -6,11 +6,13 @@ public class Pilha<T>
 {
 	private ArrayList<T> obj = new ArrayList<T>();
 	
+	// Inicializa a pilha que será utilizada para o baralho
 	public Pilha()
 	{
 		obj = new ArrayList<T>();
 	}
 	
+	// Realiza operações básicas de pilha
 	public void Push(T t)
 	{
 		this.obj.add(t);

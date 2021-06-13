@@ -14,6 +14,7 @@ public class NewJFramePlayer extends JFrame
 	public NewJPanelPlayer p;
 	public GameManager GameManager;
 	
+	// Inicializa os JFrames referente às telas dos jogadores
 	public NewJFramePlayer(Jogador player, GameManager gameManager)
 	{
 		Toolkit tk = Toolkit.getDefaultToolkit();

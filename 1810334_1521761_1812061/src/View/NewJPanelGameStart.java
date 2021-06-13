@@ -10,15 +10,16 @@ import Controller.GameManager;
 
 public class NewJPanelGameStart extends JPanel {
 
+	// Botões da tela inicial
 	private JButton Player1 = new JButton("1 Jogador");
 	private JButton Player2 = new JButton("2 Jogadores");
 	private JButton Player3 = new JButton("3 Jogadores");
 	private JButton Player4 = new JButton("4 Jogadores");
 	private JButton CarregarJogo = new JButton("Carregar Jogo");
 	
-	public GameManager gm;
+	public GameManager gm; // Referência ao GameManager
 	
-	public int numero = 0;
+	public int numero = 0; // Número de jogadores
 	
 	ArrayList<JButton> JButtonList = new ArrayList<JButton>();
 	
@@ -38,6 +39,7 @@ public class NewJPanelGameStart extends JPanel {
 		JButtonList.add(this.Player4);
 		JButtonList.add(this.CarregarJogo);
 		
+		// Define a posição dos botões na janela
 		for (int i = 0; i < 5; i++) {
 			this.add(JButtonList.get(i));
 			JButtonList.get(i).setVisible(true);
@@ -47,6 +49,7 @@ public class NewJPanelGameStart extends JPanel {
 		
 	}
 	
+	// Carrega um jogo salvo
 	private void LoadGame() 
 	{
 		try
@@ -61,6 +64,7 @@ public class NewJPanelGameStart extends JPanel {
 		}	
 	}
 
+	// Funções para iniciar o jogo de acordo com o botão selecionado
 	private void ButtonClick(int i) {
 		this.numero = i;
 		createGame();

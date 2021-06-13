@@ -18,6 +18,7 @@ public class NewJPanelPlayer extends JPanel
 	private Image imgBkg;
 	private Image cardTest;
 	Jogador player;
+	// Botões e labels do jogador
 	public JButton JButtonDeal = new JButton("Deal");
 	public JButton JButtonHit = new JButton("Hit");
 	public JButton JButtonSplit = new JButton("Split");
@@ -27,7 +28,7 @@ public class NewJPanelPlayer extends JPanel
 	public JLabel JLabelBet = new JLabel("Aposta = 0");
 	public JLabel JLabelCredits = new JLabel("Creditos = 500");
 	private JLabel JLabelSum = new JLabel("Soma das cartas = 0");
-	GameManager GameManager;
+	GameManager GameManager; // Referência ao GameManager 
 	
 	public NewJPanelPlayer(GameManager gameManager) 
 	{
@@ -37,6 +38,7 @@ public class NewJPanelPlayer extends JPanel
 		
 		GameManager = gameManager;
 
+		// Adiciona funções aos botões 
 		JButtonDeal.addActionListener(e -> ButtonClickDeal());
 		JButtonHit.addActionListener(e -> ButtonClickHit());
 		JButtonSplit.addActionListener(e -> ButtonClickSplit());
@@ -59,6 +61,7 @@ public class NewJPanelPlayer extends JPanel
 		JButtonStand.setEnabled(false);
 		JButtonDouble.setEnabled(false);
 		
+		// Define a posição dos botões e labels na janela dos jogadores
 		for (int i = 0; i < JButtonList.size(); i++) {
 			JButtonList.get(i).setVisible(true);
 			JButtonList.get(i).setBounds(110+(i*130), 550, 100, 50);
@@ -77,6 +80,7 @@ public class NewJPanelPlayer extends JPanel
 		
 	}
 	
+	// Funções referentes ao clique de cada botão
 	private void ButtonClickDouble() {
 		// TODO Auto-generated method stub
 		if (this == GameManager.jogadoresInterface.get(GameManager.turn).p) {
@@ -131,6 +135,7 @@ public class NewJPanelPlayer extends JPanel
 		
 	}
 
+	// Desenha os elementos da tela do jogador
 	public void paintComponent(Graphics G)
 	{
 		super.paintComponent(G);
@@ -143,6 +148,7 @@ public class NewJPanelPlayer extends JPanel
 		JLabelSum.setText("Soma das cartas = " + String.valueOf(player.getPontos()));
 	}
 	
+	// Obtem a imagem da carta
 	private Image readImage(String ImgName)
 	{
 		try 
@@ -156,6 +162,7 @@ public class NewJPanelPlayer extends JPanel
 		return null;
 	}
 
+	// Associa o jogador a janela
 	public void setPlayer(Jogador player) 
 	{
 		// TODO Auto-generated method stub

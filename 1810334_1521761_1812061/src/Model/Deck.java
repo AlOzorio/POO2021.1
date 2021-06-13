@@ -3,16 +3,18 @@ package Model;
 public class Deck 
 {
 
-	private Pilha<Carta> baralho;
+	private Pilha<Carta> baralho; 
 	private String[] naipe = new String[] {"h_Copas", "d_Ouros", "c_Paus", "s_Espadas"};
 	private int[] valor = new int[] {2,3,4,5,6,7,8,9};
 	private String[] nome = new String[] {"dois","tres","quatro","cinco","seis","sete","oito","nove"};
 	
+	// Inicializa a pilha contendo as cartas
 	public Deck()
 	{
 		this.baralho = new Pilha<Carta>();
 	}
 	
+	// Cria e empilha as cartas 
 	public void IniciaBaralho()
 	{
 		Carta c;
@@ -50,11 +52,13 @@ public class Deck
 		baralho.Shuffle();
 	}
 	
+	// Obtem o número de cartas que ainda estão no deck
 	public int NumCartas()
 	{
 		return baralho.GetSize();
 	}
 	
+	// Compra uma carta do baralho
 	public Carta Draw()
 	{
 		if(this.NumCartas() == 187)
@@ -65,6 +69,7 @@ public class Deck
 		return (Carta) baralho.Pop();
 	}
 	
+	// Adiciona uma carta ao topo do baralho
 	public void AddCard(Carta c)
 	{
 		baralho.Push(c);

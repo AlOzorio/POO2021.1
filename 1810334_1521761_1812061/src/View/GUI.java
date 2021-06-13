@@ -9,6 +9,7 @@ public class GUI {
 		
 	public GUI() {}
 	
+	// Abre a janela de início de jogo
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		// Main principal 

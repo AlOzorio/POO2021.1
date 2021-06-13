@@ -6,6 +6,7 @@ public class Carta
 	private int valor;
 	private String nome;
 	
+	// Inicalização do objeto carta
 	public Carta(String cardSuite, int cardValue, String cardName)
 	{
 		this.naipe = cardSuite;
@@ -13,6 +14,8 @@ public class Carta
 		this.nome = cardName;
 	}
 	
+	
+	// Funções para obter e mudar o nome das cartas
 	public String GetName()
 	{
 		return this.nome;
@@ -23,6 +26,8 @@ public class Carta
 		this.nome = nome;
 	}
 	
+	
+	// Funções para obter e mudar o naipe das cartas
 	public String GetSuite()
 	{
 		return this.naipe;
@@ -33,6 +38,7 @@ public class Carta
 		this.naipe = naipe;
 	}
 	
+	// Obtem o nome da carta para encontrar a imagem referente
 	public String GetIndex()
 	{
 		if (this.valor < 10 && this.valor > 1) {
@@ -41,6 +47,7 @@ public class Carta
 		return String.valueOf(this.nome.charAt(0)) + this.naipe.charAt(0) ;
 	}
 
+	// Funções para manipular o valor da carta
 	public int GetValue()
 	{
 		return this.valor;
