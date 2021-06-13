@@ -6,35 +6,40 @@ import Model.GameManager;
 import Model.Jogador;
 
 public class Interfaces {
-	public ArrayList<NewJFramePlayer> Interfaces = new ArrayList<NewJFramePlayer>();
+	// Lista da interface de cada mao do jogador. Cada jogador tem um objeto Interfaces, com uma lista InterfacesLista.
+	public ArrayList<NewJFramePlayer> InterfacesLista = new ArrayList<NewJFramePlayer>();
 	
 	public Interfaces(Jogador player, int mao, GameManager gameManager)
 	{
+		// Construtor da classe, garante que a lista tenha pelo menos uma mão
 		NewJFramePlayer playerInterface = new NewJFramePlayer(player, mao, gameManager);
-		Interfaces.add(playerInterface);
+		InterfacesLista.add(playerInterface);
 	}
 
 	public NewJFramePlayer getInterface(int i) {
-		// TODO Auto-generated method stub
-		return Interfaces.get(i);
+		// Retorna a interface da mao desejada, indicada pelo int recebido
+		return InterfacesLista.get(i);
 	}
 
 	public void addNewMao(Jogador player, int mao, GameManager gameManager) 
 	{
+		// Cria uma nova mao para o jogador
 		NewJFramePlayer playerInterface = new NewJFramePlayer(player, mao, gameManager);
-		Interfaces.add(playerInterface);
+		InterfacesLista.add(playerInterface);
 	}
 
-	public void removeMao(int i) {
-		Interfaces.remove(i);
-		
+	public void removeMao(int i) 
+	{
+		// Retira a mao desejada do jogador, indicada pelo int recebido
+		InterfacesLista.remove(i);
 	}
 	
 	public void repaintInterfaces()
 	{
-		for (int i = 0; i < Interfaces.size(); i++) 
+		// Atualiza graficamente todas as interfaces das maos do jogador
+		for (int i = 0; i < InterfacesLista.size(); i++) 
 		{
-			Interfaces.get(i).repaint();
+			InterfacesLista.get(i).repaint();
 		}
 	}
 }

@@ -30,13 +30,7 @@ public class GameManager
 			playerInterface.getInterface(0).setVisible(true);
 			playerInterface.getInterface(0).setTitle("Jogador " + String.valueOf(i+1));
 			jogadoresInterface.add(playerInterface);
-			//jogadoresInterface.get(i).getInterface(0).setVisible(true);
-			//jogadoresInterface.get(i).getInterface(0).setTitle("Jogador " + String.valueOf(i+1));
-		}
-
-		System.out.println(jogadoresInterface.size());
-		System.out.println(jogadoresInterface.get(0).Interfaces.size());
-		
+		}		
 		
 		dealer = new Dealer();
 		windowDealer = new NewJFrameDealer(dealer, this);
@@ -51,7 +45,6 @@ public class GameManager
 		deck.Embaralhar();
 		deck.AddCard(new Carta("h_Copas", 10, "t_dez"));
 		deck.AddCard(new Carta("h_Copas", 10, "j_valete"));
-		System.out.println("jogo com " + playerCount + " jogadores!");
 	}
 	
 	//region Player 
@@ -187,8 +180,6 @@ public class GameManager
 			currentPlayer.setCreditos(currentPlayer.getCreditos() - currentPlayer.getTotalBet(n_mao));
 			currentPlayer.addToBet(currentPlayer.getTotalBet(n_mao), n_mao);
 			currentPlayer.addCarta(deck.Draw(), n_mao);
-			//jogadoresInterface.get(turn).getInterface(n_mao).p.JLabelBet.setText("Aposta = " + String.valueOf(currentPlayer.getTotalBet(n_mao)));
-			//jogadoresInterface.get(turn).getInterface(n_mao).p.JLabelCredits.setText("Creditos = " + String.valueOf(currentPlayer.getCreditos()));
 			jogadoresInterface.get(turn).repaintInterfaces();
 			if(currentPlayer.getPontos(n_mao) > 21)
 			{
@@ -262,8 +253,6 @@ public class GameManager
 		currentPlayer.setCreditos(currentPlayer.getTotalBet(n_mao)/2 + currentPlayer.getCreditos());
 		currentPlayer.setTotalBet(currentPlayer.getTotalBet(n_mao)/2, n_mao);
 		prizePool -= currentPlayer.getTotalBet(n_mao)/2;
-		//jogadoresInterface.get(turn).getInterface(n_mao).p.JLabelBet.setText("Aposta = " + String.valueOf(currentPlayer.getTotalBet(n_mao)));
-		//jogadoresInterface.get(turn).getInterface(n_mao).p.JLabelCredits.setText("Creditos = " + String.valueOf(currentPlayer.getCreditos()));
 		jogadoresInterface.get(turn).repaintInterfaces();
 		jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonHit.setEnabled(false);
 		jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonDouble.setEnabled(false);
@@ -461,11 +450,8 @@ public class GameManager
 	
 	private void rewardWinner(float modifier, int i, int mao_num) 
 	{
-		System.out.println("dealer wins");
 		jogadores.get(i).setCreditos(modifier * jogadores.get(i).getTotalBet(mao_num) + jogadores.get(i).getCreditos());
 		jogadores.get(i).setTotalBet(0, mao_num);
-		//jogadoresInterface.get(i).getInterface(mao_num).p.JLabelBet.setText("Aposta = " + String.valueOf(jogadores.get(i).getTotalBet(mao_num)));
-		//jogadoresInterface.get(i).getInterface(mao_num).p.JLabelCredits.setText("Creditos = " + String.valueOf(jogadores.get(i).getCreditos()));
 		jogadoresInterface.get(i).repaintInterfaces();
 	}
 

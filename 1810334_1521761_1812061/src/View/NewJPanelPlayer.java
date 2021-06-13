@@ -149,7 +149,6 @@ public class NewJPanelPlayer extends JPanel
 		G.drawImage(this.imgBkg, 0, 0, 1000, 650, getFocusCycleRootAncestor());
 		for (int i = 0; i < player.getMao(this.mao_number).getCartas().size(); i++)
 		{
-			System.out.println(player.getMao(this.mao_number).getCartas().get(i).GetIndex());
 			G.drawImage(readImage("Resources/" + player.getMao(this.mao_number).getCartas().get(i).GetIndex() + ".gif"), i*120 + 300, 400, 73, 97, getFocusCycleRootAncestor());	
 		}
 		JLabelSum.setText("Soma das cartas = " + String.valueOf(player.getPontos(this.mao_number)));

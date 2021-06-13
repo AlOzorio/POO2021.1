@@ -56,7 +56,6 @@ public class NewJPanelDealer extends JPanel {
 			{
 				public void mousePressed(MouseEvent e)
 				{
-					//System.out.println(e.getX() + "/" + e.getY());
 					mouseClick(e.getX(), e.getY());
 				}
 			}
@@ -116,7 +115,6 @@ public class NewJPanelDealer extends JPanel {
 		
 		for (int i = 0; i < dealer.getMao(0).getCartas().size(); i++)
 		{
-			System.out.println(dealer.getMao(0).getCartas().get(i).GetIndex());
 			G.drawImage(readImage("Resources/" + dealer.getMao(0).getCartas().get(i).GetIndex() + ".gif"), i*120 + 300, 110, 73, 97, getFocusCycleRootAncestor());				
 		}
 		JLabelSum.setText("Soma das cartas = " + String.valueOf(dealer.getPontos(0)));
@@ -150,37 +148,30 @@ public class NewJPanelDealer extends JPanel {
 	{
 		if ((x >= 725 && x <= 725 + 50) && (y >= 350 && y <= 350 + 50)) 
 		{
-			System.out.println("Clicou na ficha de valor 1");
 			GameManager.AddToPrizePool(1);
 		}
 		if ((x >= 625 && x <= 625 + 50) && (y >= 350 && y <= 350 + 50)) 
 		{
-			System.out.println("Clicou na ficha de valor 5");
 			GameManager.AddToPrizePool(5);
 		}
 		if ((x >= 525 && x <= 525 + 50) && (y >= 350 && y <= 350 + 50)) 
 		{
-			System.out.println("Clicou na ficha de valor 10");
 			GameManager.AddToPrizePool(10);
 		}
 		if ((x >= 425 && x <= 425 + 50) && (y >= 350 && y <= 350 + 50)) 
 		{
-			System.out.println("Clicou na ficha de valor 20");
 			GameManager.AddToPrizePool(20);
 		}
 		if ((x >= 325 && x <= 325 + 50) && (y >= 350 && y <= 350 + 50)) 
 		{
-			System.out.println("Clicou na ficha de valor 50");
 			GameManager.AddToPrizePool(50);
 		}
 		if ((x >= 225 && x <= 225 + 50) && (y >= 350 && y <= 350 + 50)) 
 		{
-			System.out.println("Clicou na ficha de valor 100");
 			GameManager.AddToPrizePool(100);
 		}
 
 		JLabelPrizePool.setText("Aposta total = " + String.valueOf(GameManager.prizePool));
-		System.out.println("valor do turno = " + String.valueOf(GameManager.turn));
 		GameManager.jogadoresInterface.get(GameManager.turn).getInterface(0).p.JLabelBet.setText("Aposta = " + String.valueOf(GameManager.currentPlayer.getTotalBet(0)));
 		GameManager.jogadoresInterface.get(GameManager.turn).getInterface(0).p.JLabelCredits.setText("Creditos = " + String.valueOf(GameManager.currentPlayer.getCreditos()));
 	}

@@ -52,7 +52,6 @@ public class Jogador
 	
 	public int getPontos(int i) 
 	{
-		System.out.println("o tamanho da mao eh = " + String.valueOf(this.maos.size()));
 		return this.maos.get(i).getPontos();
 	}
 	
