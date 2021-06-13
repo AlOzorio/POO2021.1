@@ -107,7 +107,13 @@ public class NewJPanelPlayer extends JPanel
 		}
 	}
 
-	private void ButtonClickSplit() {
+	private void ButtonClickSplit() 
+	{
+		if (this == GameManager.jogadoresInterface.get(GameManager.turn).p) 
+		{
+			GameManager.Split();
+			this.repaint();
+		}
 	}
 
 	private void ButtonClickHit() {

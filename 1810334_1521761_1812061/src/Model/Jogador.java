@@ -7,39 +7,26 @@ public class Jogador
 {
 
 	private String nome;
-	private ArrayList<Carta> mao;
 	private float creditos;
-	private int pontos;
-	private int totalBet;
 	private boolean dealt;
-	private boolean out;
+	private ArrayList<Mao> maos;
 	
 	public Jogador()
 	{
 		this.nome = null;
-		this.pontos = 0;
-		this.mao = new ArrayList<Carta>();
 		this.creditos = 500;
-		this.totalBet = 0;
 		this.dealt = false;
-		this.out = false;
+		this.maos = new ArrayList<Mao>();
 	}
 	
-	public void addCarta(Carta carta)
+	public int getMaoQtd()
 	{
-
-		this.mao.add(carta);
-		this.pontos += carta.GetValue();
-		if(this.pontos > 21)
-		{
-			for (int i = 0; i < this.mao.size(); i++) {
-				if (mao.get(i).GetValue() == 11 ) {
-					mao.get(i).SetValue(1);
-					this.pontos -= 10;
-					break;
-				}
-			}
-		}
+		return maos.size();
+	}
+	
+	public void addCarta(Carta carta, int i)
+	{
+		this.maos.get(i).addCarta(carta);
 	}
 	
 	public String getNome()
@@ -52,24 +39,24 @@ public class Jogador
 		this.nome = nome;
 	}
 	
-	public ArrayList<Carta> getMao()
+	public ArrayList<Carta> getMao(int i)
 	{
-		return mao;
+		return this.maos.get(i).getMao();
 	}
 	
-	public void setMao(ArrayList<Carta> mao) 
+	public void setMao(ArrayList<Carta> mao, int i) 
 	{
-		this.mao = mao;
+		this.maos.get(i).setMao(mao);
 	}
 	
-	public int getPontos() 
+	public int getPontos(int i) 
 	{
-		return pontos;
+		return this.maos.get(i).getPontos();
 	}
 	
-	public void setPontos(int pontos)
+	public void setPontos(int pontos, int i)
 	{
-		this.pontos = pontos;
+		this.maos.get(i).setPontos(pontos);
 	}
 	
 	public float getCreditos()
@@ -82,19 +69,19 @@ public class Jogador
 		this.creditos = credito;
 	}
 	
-	public int getTotalBet()
+	public int getTotalBet(int i)
 	{
-		return this.totalBet;
+		return this.maos.get(i).getTotalBet();
 	}
 	
-	public void setTotalBet(int valor)
+	public void setTotalBet(int valor, int i)
 	{
-		this.totalBet = valor;
+		this.maos.get(i).setTotalBet(valor);
 	}
 	
-	public void addToBet(int valor)
+	public void addToBet(int valor, int i)
 	{
-		this.totalBet += valor;
+		this.maos.get(i).addToBet(valor);
 	}
 	
 	public boolean getDealt()
@@ -107,24 +94,19 @@ public class Jogador
 		this.dealt = valor;
 	}
 	
-	public boolean getOut()
+	public boolean getOut(int i)
 	{
-		return this.out;
+		return this.maos.get(i).getOut();
 	}
 	
-	public void setOut(Boolean valor)
+	public void setOut(Boolean valor, int i)
 	{
-		this.out = valor;
+		this.maos.get(i).setOut(valor); 
 	}
 
-	public boolean getBlackjack() 
+	public boolean getBlackjack(int i) 
 	{
-		if(this.mao.size() == 2 && this.getPontos() == 21)
-		{
-			return true;
-		}
-		
-		return false;
+		return this.maos.get(i).getBlackjack();
 	}
 }
 

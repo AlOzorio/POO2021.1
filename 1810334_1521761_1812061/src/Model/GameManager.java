@@ -21,6 +21,7 @@ public class GameManager
 	public Jogador currentPlayer;
 	public Dealer dealer; 
 	public int turn = 0;
+	public int n_mao = 0;
 	public ArrayList<Jogador> winner;
 	
 	public void NewGame(int playerCount)
@@ -46,6 +47,8 @@ public class GameManager
 		currentPlayer = jogadores.get(turn);
 		deck.IniciaBaralho();
 		deck.Embaralhar();
+		deck.AddCard(new Carta("h_Copas", 10, "t_dez"));
+		deck.AddCard(new Carta("h_Copas", 10, "j_valete"));
 		System.out.println("jogo com " + playerCount + " jogadores!");
 	}
 	
@@ -82,6 +85,12 @@ public class GameManager
 			jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(true);
 			jogadoresInterface.get(turn).p.JButtonStand.setEnabled(true);
 			jogadoresInterface.get(turn).p.JButtonSurrender.setEnabled(true);
+			
+			if(currentPlayer.getMao().get(0).GetValue() == currentPlayer.getMao().get(1).GetValue() && currentPlayer.getTotalBet() <= currentPlayer.getCreditos())
+			{
+				jogadoresInterface.get(turn).p.JButtonSplit.setEnabled(true);	
+			}
+			
 			if (turn == jogadores.size() - 1) 
 			{
 				turn = 0;
@@ -97,20 +106,25 @@ public class GameManager
 		}
 	}
 	
+	public void Split()
+	{
+		System.out.println("split");
+	}
+	
 	public void Hit()
 	{
-		if(jogadores.get(turn).getOut() == false && currentPlayer != null)
+		if(jogadores.get(turn).getOut(n_mao) == false && currentPlayer != null)
 		{
 			JOptionPane.showMessageDialog(null,"Jogador deu Hit","turno",JOptionPane.INFORMATION_MESSAGE);
 			jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(false);
 			jogadoresInterface.get(turn).p.JButtonSurrender.setEnabled(false);
 			Carta topDeck = deck.Draw();
-			currentPlayer.addCarta(topDeck);
+			currentPlayer.addCarta(topDeck, n_mao);
 		}
 		
-		if(jogadores.get(turn).getPontos() > 21)
+		if(jogadores.get(turn).getPontos(n_mao) > 21)
 		{
-			jogadores.get(turn).setOut(true);
+			jogadores.get(turn).setOut(true, n_mao);
 			jogadoresInterface.get(turn).p.JButtonHit.setEnabled(false);
 			
 		}
@@ -124,15 +138,26 @@ public class GameManager
 		jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(false);
 		jogadoresInterface.get(turn).p.JButtonStand.setEnabled(false);
 		jogadoresInterface.get(turn).p.JButtonSurrender.setEnabled(false);
-		if(turn == jogadores.size() - 1) //Se for o ultimo jogador, acabou a rodada
+		
+		if(n_mao == currentPlayer.getMaoQtd() - 1)
 		{
-			DealerTurn();
+			n_mao = 0;
+			
+			if(turn == jogadores.size() - 1) //Se for o ultimo jogador, acabou a rodada
+			{
+				DealerTurn();
+			}
+			else
+			{
+				turn++;
+				currentPlayer = jogadores.get(turn); 
+			}
 		}
 		else
 		{
-			turn++;
-			currentPlayer = jogadores.get(turn); 
+			n_mao++;
 		}
+
 	}
 	
 	public void Double()
@@ -392,18 +417,18 @@ public class GameManager
 
 	public void Dealer_Deal()
 	{
-		dealer.addCarta(deck.Draw());
+		dealer.addCarta(deck.Draw(), 0);
 		windowDealer.hideHiddenCard();
-		dealer.addCarta(deck.Draw());
+		dealer.addCarta(deck.Draw(), 0);
 		dealer.setDealt(true);
 		
-		dealer.setPontos(dealer.getPontos() - dealer.getMao().get(0).GetValue());
+		dealer.setPontos(dealer.getPontos(0) - dealer.getMao(0).get(0).GetValue(), 0);
 	}
 	
 	public void Dealer_Hit()
 	{	
 		Carta topDeck = deck.Draw();
-		dealer.addCarta(topDeck);
+		dealer.addCarta(topDeck, 0);
 		
 		windowDealer.repaint();
 	}
