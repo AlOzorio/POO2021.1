@@ -409,4 +409,19 @@ public class GameManager
 	}
 	
 	//endregion
+	
+	//region save
+	
+	
+	public void SaveGame()
+	{
+		
+	}
+	
+	public void LoadGame()
+	{
+		
+	}
+	
+	//endregion
 }
