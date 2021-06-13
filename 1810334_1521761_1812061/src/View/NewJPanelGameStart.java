@@ -5,7 +5,8 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import javax.swing.*;
-import Model.GameManager;
+
+import Controller.GameManager;
 
 public class NewJPanelGameStart extends JPanel {
 

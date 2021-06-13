@@ -13,9 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Controller.GameManager;
 import Model.Jogador;
 import Model.Dealer;
-import Model.GameManager;
 
 public class NewJPanelDealer extends JPanel {
 

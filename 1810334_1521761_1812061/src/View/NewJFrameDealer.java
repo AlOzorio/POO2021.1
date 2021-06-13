@@ -6,8 +6,8 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import Controller.GameManager;
 import Model.Dealer;
-import Model.GameManager;
 
 public class NewJFrameDealer extends JFrame {
 

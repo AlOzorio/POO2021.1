@@ -3,10 +3,12 @@ package ModelTest;
 import Model.Jogador;
 import Model.Carta;
 import Model.Ficha;
-import Model.GameManager;
+
 import static org.junit.Assert.*;
 import java.util.*;
 import org.junit.Test;
+
+import Controller.GameManager;
 
 public class GameManagerTest 
 {

@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 
-import Model.GameManager;
+import Controller.GameManager;
 import Model.Jogador;
 
 public class NewJFramePlayer extends JFrame 

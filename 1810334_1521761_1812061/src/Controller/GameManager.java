@@ -1,4 +1,4 @@
-package Model;
+package Controller;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -10,6 +10,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import Model.Carta;
+import Model.Dealer;
+import Model.Deck;
+import Model.Ficha;
+import Model.Jogador;
 import View.NewJFrameDealer;
 import View.NewJFramePlayer;
 
@@ -98,7 +103,7 @@ public class GameManager
 			}
 			currentPlayer = jogadores.get(turn); 
 			
-			JOptionPane.showMessageDialog(null,"Jogador deu Deal","turno",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Jogador " + String.valueOf(turn + 1) + " deu Deal","Turno",JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	
@@ -106,7 +111,7 @@ public class GameManager
 	{
 		if(jogadores.get(turn).getOut() == false && currentPlayer != null)
 		{
-			JOptionPane.showMessageDialog(null,"Jogador deu Hit","turno",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Jogador " + String.valueOf(turn + 1) + " deu Hit","Turno",JOptionPane.INFORMATION_MESSAGE);
 			jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(false);
 			jogadoresInterface.get(turn).p.JButtonSurrender.setEnabled(false);
 			Carta topDeck = deck.Draw();
@@ -117,7 +122,7 @@ public class GameManager
 		{
 			jogadores.get(turn).setOut(true);
 			jogadoresInterface.get(turn).p.JButtonHit.setEnabled(false);
-			
+			JOptionPane.showMessageDialog(null,"Jogador " + String.valueOf(turn + 1) + " está fora da rodada","Turno",JOptionPane.INFORMATION_MESSAGE);			
 		}
 		
 	}
@@ -144,6 +149,7 @@ public class GameManager
 	{
 		if (currentPlayer.getCreditos() >= currentPlayer.getTotalBet() && currentPlayer.getMao().size() == 2)
 		{
+			JOptionPane.showMessageDialog(null,"Jogador " + String.valueOf(turn + 1) + " deu Double","Turno",JOptionPane.INFORMATION_MESSAGE);
 			currentPlayer.setCreditos(currentPlayer.getCreditos() - currentPlayer.getTotalBet());
 			currentPlayer.addToBet(currentPlayer.getTotalBet());
 			currentPlayer.addCarta(deck.Draw());
@@ -152,6 +158,7 @@ public class GameManager
 			if(currentPlayer.getPontos() > 21)
 			{
 				currentPlayer.setOut(true);
+				JOptionPane.showMessageDialog(null,"Jogador " + String.valueOf(turn + 1) + " está fora da rodada","Turno",JOptionPane.INFORMATION_MESSAGE);
 			}
 			jogadoresInterface.get(turn).p.JButtonHit.setEnabled(false);
 			jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(false);
@@ -171,6 +178,7 @@ public class GameManager
 	
 	public void Clear()
 	{
+		JOptionPane.showMessageDialog(null,"Iniciando uma nova rodada","Jogo",JOptionPane.INFORMATION_MESSAGE);
 		for(int i = 0; i < jogadores.size(); i++)
 		{
 			for(int j = 0; j < jogadores.get(i).getMao().size(); j++)
@@ -209,6 +217,7 @@ public class GameManager
 	
 	public void Surrender()
 	{
+		JOptionPane.showMessageDialog(null,"Jogador " + String.valueOf(turn + 1) + " desistiu da rodada","Turno",JOptionPane.INFORMATION_MESSAGE);
 		currentPlayer.setOut(true);
 		currentPlayer.setCreditos(currentPlayer.getTotalBet()/2 + currentPlayer.getCreditos());
 		currentPlayer.setTotalBet(currentPlayer.getTotalBet()/2);
@@ -222,6 +231,7 @@ public class GameManager
 	
 	public void Quit()
 	{
+		JOptionPane.showMessageDialog(null,"Jogador " + String.valueOf(turn + 1) + " abandonou a partida","Jogo",JOptionPane.INFORMATION_MESSAGE);
 		if (currentPlayer.getMao().size() > 0)
 		{
 			for (int i = 0; i < currentPlayer.getMao().size() - 1; i++) 
@@ -238,6 +248,7 @@ public class GameManager
 		
 		if(jogadores.size() == 0)
 		{
+			JOptionPane.showMessageDialog(null,"Todos os jogadores saíram. Encerrando partida","Jogo",JOptionPane.INFORMATION_MESSAGE);
 			System.exit(0);
 		}
 		
@@ -280,6 +291,7 @@ public class GameManager
 					{
 						if(jogadores.get(i).getBlackjack() == true)
 						{
+							JOptionPane.showMessageDialog(null,"Push para o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
 							rewardWinner(1, i);
 						}
 					}
@@ -294,6 +306,7 @@ public class GameManager
 						// Caso 2: Jogador possui blackjack, mas dealer não
 						if(jogadores.get(i).getBlackjack() == true)
 						{
+							JOptionPane.showMessageDialog(null,"Blackjack para o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
 							rewardWinner(2.5f, i);
 						}
 					}
@@ -306,6 +319,7 @@ public class GameManager
 			{
 				for(int i = 0; i < jogadores.size(); i++)
 				{
+					JOptionPane.showMessageDialog(null,"Vitória do dealer contra o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
 					rewardWinner(0, i);
 				}
 				prizePool = 0;
@@ -321,6 +335,7 @@ public class GameManager
 		{
 			if(jogadores.get(i).getBlackjack() == true)
 			{
+				JOptionPane.showMessageDialog(null,"Blackjack para o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
 				rewardWinner(2.5f, i);
 			}
 		}
@@ -336,21 +351,25 @@ public class GameManager
 			{
 				if (jogadores.get(i).getPontos() > dealer.getPontos() || dealer.getPontos() > 21)
 				{
+					JOptionPane.showMessageDialog(null,"Vitória ordinária para o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
 					rewardWinner(2, i);
 				}
 				else
 				{
+					JOptionPane.showMessageDialog(null,"Vitória do dealer contra o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
 					rewardWinner(0, i);
 				}
 			}
 			else if(jogadores.get(i).getOut() == true)
 			{
+				JOptionPane.showMessageDialog(null,"Vitória do dealer contra o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
 				rewardWinner(0, i);
 			}
 		}
 		
 		prizePool = 0;
 		windowDealer.resetPrizePoolLabel();
+		JOptionPane.showMessageDialog(null,"Fim da rodada","Jogo",JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	//endregion
@@ -377,22 +396,31 @@ public class GameManager
 		{
 			for(int i = 0; i < jogadores.size(); i++)
 			{
+				JOptionPane.showMessageDialog(null,"Vitória do dealer contra o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
 				rewardWinner(0, i);
 				
 			}
 			prizePool = 0;
 			windowDealer.resetPrizePoolLabel();
+			JOptionPane.showMessageDialog(null,"Fim da rodada","Jogo",JOptionPane.INFORMATION_MESSAGE);
+
 		}
 	}
 	
 	private void rewardWinner(float modifier, int i) 
 	{
-		System.out.println("dealer wins");
 		jogadores.get(i).setCreditos(modifier * jogadores.get(i).getTotalBet() + jogadores.get(i).getCreditos());
 		jogadores.get(i).setTotalBet(0);
 		jogadoresInterface.get(i).p.JLabelBet.setText("Aposta = " + String.valueOf(jogadores.get(i).getTotalBet()));
 		jogadoresInterface.get(i).p.JLabelCredits.setText("Creditos = " + String.valueOf(jogadores.get(i).getCreditos()));
 		jogadoresInterface.get(i).repaint();
+		
+		if(jogadores.get(i).getCreditos() <= 0)
+		{
+			jogadoresInterface.get(i).setVisible(false);
+			jogadores.remove(i);
+			jogadoresInterface.remove(i);
+		}
 	}
 
 	public void Dealer_Deal()
@@ -422,13 +450,13 @@ public class GameManager
 		File saveFile = new File("partida.txt");
 		if(saveFile.createNewFile())
 		{
-			System.out.println("jogo salvo");
+			JOptionPane.showMessageDialog(null,"Jogo Salvo","Jogo",JOptionPane.INFORMATION_MESSAGE);
 		}
 		else
 		{
 			saveFile.delete();
 			saveFile.createNewFile();
-			System.out.println("save substituido");
+			JOptionPane.showMessageDialog(null,"Arquivo salvo substituido","Jogo",JOptionPane.INFORMATION_MESSAGE);
 		}
 		
 		FileWriter writer = new FileWriter("partida.txt");
@@ -519,6 +547,7 @@ public class GameManager
 		}
 		
 		RepaintAll();
+		JOptionPane.showMessageDialog(null,"Partida carregada","Jogo",JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	//endregion

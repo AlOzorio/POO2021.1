@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import Controller.GameManager;
 import Model.Carta;
-import Model.GameManager;
 import Model.Jogador;
 
 public class NewJPanelPlayer extends JPanel 
