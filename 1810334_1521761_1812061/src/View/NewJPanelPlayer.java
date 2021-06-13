@@ -161,10 +161,5 @@ public class NewJPanelPlayer extends JPanel
 		// TODO Auto-generated method stub
 		this.player = player;
 	}
-	
-	public void reseJButtons()
-	{
-		JButtonDeal.setEnabled(true);	
-	}
 
 }

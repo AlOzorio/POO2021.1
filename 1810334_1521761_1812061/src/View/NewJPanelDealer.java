@@ -33,12 +33,14 @@ public class NewJPanelDealer extends JPanel {
 	private JButton JButtonClear = new JButton("Clear");
 	private JButton JButtonSave = new JButton("Save");
 	private JLabel JLabelPrizePool = new JLabel("Aposta total = 0");
+	private JLabel JLabelSum = new JLabel("Soma das cartas = 0");
 	GameManager GameManager;
+	private Boolean isHidden;
 	
 	public NewJPanelDealer(GameManager gameManager) 
 	{
 		GameManager = gameManager;
-		
+		isHidden = false;
 		imgBkg = readImage("Resources/blackjackBKG.png");
 		deck = readImage("Resources/deck1.gif");
 		back = readImage("Resources/deck2.gif");
@@ -77,7 +79,10 @@ public class NewJPanelDealer extends JPanel {
 	
 		this.add(JLabelPrizePool);
 		JLabelPrizePool.setVisible(true);
-		JLabelPrizePool.setBounds(870, 500, 100, 50);
+		JLabelPrizePool.setBounds(850, 500, 120, 50);
+		this.add(JLabelSum);
+		JLabelSum.setVisible(true);
+		JLabelSum.setBounds(825, 475, 150, 50);
 		
 	}
 	
@@ -114,8 +119,12 @@ public class NewJPanelDealer extends JPanel {
 			System.out.println(dealer.getMao().get(i).GetIndex());
 			G.drawImage(readImage("Resources/" + dealer.getMao().get(i).GetIndex() + ".gif"), i*120 + 300, 110, 73, 97, getFocusCycleRootAncestor());				
 		}
+		JLabelSum.setText("Soma das cartas = " + String.valueOf(dealer.getPontos()));
 		
-		G.drawImage(this.back, 300, 110, 73, 97, getFocusCycleRootAncestor());
+		if(isHidden == true)
+		{
+			G.drawImage(this.back, 300, 110, 73, 97, getFocusCycleRootAncestor());
+		}
 	}
 	
 	
@@ -170,8 +179,43 @@ public class NewJPanelDealer extends JPanel {
 			GameManager.AddToPrizePool(100);
 		}
 		
+		JLabelPrizePool.setText("Aposta total = " + String.valueOf(GameManager.prizePool));
 		GameManager.jogadoresInterface.get(GameManager.turn).p.JLabelBet.setText("Aposta = " + String.valueOf(GameManager.currentPlayer.getTotalBet()));
 		GameManager.jogadoresInterface.get(GameManager.turn).p.JLabelCredits.setText("Creditos = " + String.valueOf(GameManager.currentPlayer.getCreditos()));
+	}
+
+	public Boolean getIsHidden()
+	{
+		return isHidden;
+	}
+
+	public void setIsHidden(Boolean value)
+	{
+		isHidden = value;
+	}
+	
+	public void showHidenCard() 
+	{
+		if(isHidden == true)
+		{
+			this.setIsHidden(false);
+			dealer.setPontos(dealer.getPontos() + dealer.getMao().get(0).GetValue());
+			repaint();
+		}
+	}
+	
+	public void hideHidenCard() 
+	{
+		if(isHidden == false)
+		{
+			this.setIsHidden(true);
+			repaint();
+		}
+	}
+	
+	public JLabel getPrizePoolLabel()
+	{
+		return JLabelPrizePool;
 	}
 
 }

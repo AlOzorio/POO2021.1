@@ -21,7 +21,7 @@ public class GameManager
 	public Jogador currentPlayer;
 	public Dealer dealer; 
 	public int turn = 0;
-	public Jogador winner;
+	public ArrayList<Jogador> winner;
 	
 	public void NewGame(int playerCount)
 	{
@@ -46,7 +46,6 @@ public class GameManager
 		currentPlayer = jogadores.get(turn);
 		deck.IniciaBaralho();
 		deck.Embaralhar();
-		Dealer_Deal();
 		System.out.println("jogo com " + playerCount + " jogadores!");
 	}
 	
@@ -78,21 +77,21 @@ public class GameManager
 			currentPlayer.addCarta(deck.Draw());
 			currentPlayer.addCarta(deck.Draw());
 			currentPlayer.setDealt(true);
+			jogadoresInterface.get(turn).p.JButtonDeal.setEnabled(false);			
+			jogadoresInterface.get(turn).p.JButtonHit.setEnabled(true);
+			jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(true);
+			jogadoresInterface.get(turn).p.JButtonStand.setEnabled(true);
+			jogadoresInterface.get(turn).p.JButtonSurrender.setEnabled(true);
 			if (turn == jogadores.size() - 1) 
 			{
 				turn = 0;
+				Dealer_Deal();
 			}
 			else 
 			{
 				turn++;
 			}
 			currentPlayer = jogadores.get(turn); 
-			jogadoresInterface.get(turn).p.JButtonDeal.setEnabled(false);
-			
-			jogadoresInterface.get(turn).p.JButtonHit.setEnabled(true);
-			jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(true);
-			jogadoresInterface.get(turn).p.JButtonStand.setEnabled(true);
-			jogadoresInterface.get(turn).p.JButtonSurrender.setEnabled(true);
 			
 			JOptionPane.showMessageDialog(null,"Jogador deu Deal","turno",JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -102,17 +101,6 @@ public class GameManager
 	{
 		if(jogadores.get(turn).getOut() == false && currentPlayer != null)
 		{
-			for(int i = 0; i < jogadores.size() - 1; i++)
-			{
-				if(dealer.getPontos() == 21)
-				{
-					winner = jogadores.get(i);
-				}
-				else if(jogadores.get(i).getPontos() == 21)
-				{
-					winner = jogadores.get(i);
-				}
-			}
 			JOptionPane.showMessageDialog(null,"Jogador deu Hit","turno",JOptionPane.INFORMATION_MESSAGE);
 			jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(false);
 			jogadoresInterface.get(turn).p.JButtonSurrender.setEnabled(false);
@@ -132,7 +120,10 @@ public class GameManager
 	public void Stand()
 	{
 		JOptionPane.showMessageDialog(null,"Jogador deu Stand","turno",JOptionPane.INFORMATION_MESSAGE);
-		
+		jogadoresInterface.get(turn).p.JButtonHit.setEnabled(false);
+		jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(false);
+		jogadoresInterface.get(turn).p.JButtonStand.setEnabled(false);
+		jogadoresInterface.get(turn).p.JButtonSurrender.setEnabled(false);
 		if(turn == jogadores.size() - 1) //Se for o ultimo jogador, acabou a rodada
 		{
 			DealerTurn();
@@ -142,10 +133,6 @@ public class GameManager
 			turn++;
 			currentPlayer = jogadores.get(turn); 
 		}
-		jogadoresInterface.get(turn).p.JButtonHit.setEnabled(false);
-		jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(false);
-		jogadoresInterface.get(turn).p.JButtonStand.setEnabled(false);
-		jogadoresInterface.get(turn).p.JButtonSurrender.setEnabled(false);
 	}
 	
 	public void Double()
@@ -155,6 +142,8 @@ public class GameManager
 			currentPlayer.setCreditos(currentPlayer.getCreditos() - currentPlayer.getTotalBet());
 			currentPlayer.addToBet(currentPlayer.getTotalBet());
 			currentPlayer.addCarta(deck.Draw());
+			jogadoresInterface.get(turn).p.JLabelBet.setText("Aposta = " + String.valueOf(currentPlayer.getTotalBet()));
+			jogadoresInterface.get(turn).p.JLabelCredits.setText("Creditos = " + String.valueOf(currentPlayer.getCreditos()));
 			if(currentPlayer.getPontos() > 21)
 			{
 				currentPlayer.setOut(true);
@@ -173,7 +162,6 @@ public class GameManager
 		}
 		
 		windowDealer.repaint();
-		Dealer_Deal();
 	}
 	
 	public void Clear()
@@ -190,7 +178,6 @@ public class GameManager
 			jogadores.get(i).setDealt(false);
 			jogadores.get(i).setOut(false);
 			jogadores.get(i).setPontos(0);
-			jogadoresInterface.get(i).p.reseJButtons();
 		}
 		
 		for(int i = 0; i < dealer.getMao().size(); i++)
@@ -203,6 +190,11 @@ public class GameManager
 		dealer.setDealt(false);
 		dealer.setPontos(0);
 		
+		if(windowDealer.getIsHidden() == true)
+		{
+			windowDealer.setIsHiiden(false);
+		}
+		
 		deck.Embaralhar();
 		RepaintAll();
 		turn = 0;
@@ -214,7 +206,10 @@ public class GameManager
 	{
 		currentPlayer.setOut(true);
 		currentPlayer.setCreditos(currentPlayer.getTotalBet()/2 + currentPlayer.getCreditos());
+		currentPlayer.setTotalBet(currentPlayer.getTotalBet()/2);
 		prizePool -= currentPlayer.getTotalBet()/2;
+		jogadoresInterface.get(turn).p.JLabelBet.setText("Aposta = " + String.valueOf(currentPlayer.getTotalBet()));
+		jogadoresInterface.get(turn).p.JLabelCredits.setText("Creditos = " + String.valueOf(currentPlayer.getCreditos()));
 		jogadoresInterface.get(turn).p.JButtonHit.setEnabled(false);
 		jogadoresInterface.get(turn).p.JButtonDouble.setEnabled(false);
 		jogadoresInterface.get(turn).p.JButtonSurrender.setEnabled(false);
@@ -255,23 +250,14 @@ public class GameManager
 		deck.Embaralhar();
 	}
 	
-	public void RewardWinner()
-	{	
-		// Recompompensa pela vitoria ordinaria
-		/*for (int i = 0; i < 6; i++)
-		{
-			this.winner.getFicha().get(i).setQuantidade(this.winner.getFicha().get(i).getQuantidade() + prizePool.get(i).getQuantidade());
-		}*/
-	}
-	
 	private void DeclareWinner()
 	{
-		int possibleWinnerPoints = 0;
 		Boolean dealerNeedToShowCard = false;
 		
-		if (dealer.getPontos() == 10)
+		if(dealer.getPontos() == 10)
 		{
-			for(int i = 0; i < jogadores.size() - 1; i++)
+			// Busca algum jogador com blackjack
+			for(int i = 0; i < jogadores.size(); i++)
 			{
 				if(jogadores.get(i).getBlackjack() == true)
 				{
@@ -281,21 +267,56 @@ public class GameManager
 			
 			if (dealerNeedToShowCard == true)
 			{
-				dealer.showHiddenCard();
+				windowDealer.showHiddenCard();
 				if (dealer.getPontos() == 21) 
 				{
-					winner = dealer;
+					// Caso 1: Jogador e dealer possuem blackjack (empate)
+					for(int i = 0; i < jogadores.size(); i++)
+					{
+						if(jogadores.get(i).getBlackjack() == true)
+						{
+							rewardWinner(1, i);
+						}
+					}
+					prizePool = 0;
+					windowDealer.resetPrizePoolLabel();
 					return;
 				}
 				else
-				{
-					// declara quem venceu, mas tem o caso de mais de um ganhar do dealer com a mesma pontuação
+				{					
+					for(int i = 0; i < jogadores.size(); i++)
+					{
+						// Caso 2: Jogador possui blackjack, mas dealer não
+						if(jogadores.get(i).getBlackjack() == true)
+						{
+							rewardWinner(2.5f, i);
+						}
+					}
+					prizePool = 0;
+					windowDealer.resetPrizePoolLabel();
+					return;
 				}
 			}
-			else 
+			else // Caso 3: Apenas o dealer tem blackjack
 			{
-				winner = dealer;
+				for(int i = 0; i < jogadores.size(); i++)
+				{
+					rewardWinner(0, i);
+				}
+				prizePool = 0;
+				windowDealer.resetPrizePoolLabel();
 				return;
+			}
+		}
+		
+		windowDealer.showHiddenCard();
+		
+		// Caso 4: Jogador tem blackjack e dealer não
+		for(int i = 0; i < jogadores.size(); i++)
+		{
+			if(jogadores.get(i).getBlackjack() == true)
+			{
+				rewardWinner(2.5f, i);
 			}
 		}
 		
@@ -303,35 +324,38 @@ public class GameManager
 		{
 			Dealer_Hit();
 		}
-	
-		for(int i = 0; i < jogadores.size() - 1; i++)
+			
+		for(int i = 0; i < jogadores.size(); i++)
 		{
-			if(jogadores.get(i).getPontos() < 22)
+			if(jogadores.get(i).getOut() == false && jogadores.get(i).getBlackjack() == false)
 			{
-				if (jogadores.get(i).getPontos() > possibleWinnerPoints)
+				if (jogadores.get(i).getPontos() > dealer.getPontos() || dealer.getPontos() > 21)
 				{
-					winner = jogadores.get(i);
-					possibleWinnerPoints = jogadores.get(i).getPontos(); // MAIS DE UM JOGADOR
+					rewardWinner(2, i);
 				}
-				
+				else
+				{
+					rewardWinner(0, i);
+				}
+			}
+			else if(jogadores.get(i).getOut() == true)
+			{
+				rewardWinner(0, i);
 			}
 		}
 		
-		
-		if(winner.getPontos() < dealer.getPontos())
-			{
-				winner = dealer;
-			}
+		prizePool = 0;
+		windowDealer.resetPrizePoolLabel();
 	}
+	
 	//endregion
 	
 	//region Dealer
 	
 	private void DealerTurn()
 	{
-		Boolean theresPossibleWinner = false;
-		
-		for(int i = 0; i < jogadores.size() - 1; i++)
+		Boolean theresPossibleWinner = false;		
+		for(int i = 0; i < jogadores.size(); i++)
 		{
 			if(jogadores.get(i).getOut()  == false)
 			{
@@ -346,20 +370,30 @@ public class GameManager
 		}
 		else
 		{
-			winner = dealer;
+			for(int i = 0; i < jogadores.size(); i++)
+			{
+				rewardWinner(0, i);
+				
+			}
+			prizePool = 0;
+			windowDealer.resetPrizePoolLabel();
 		}
-		
-		rewardWinner();
 	}
 	
-	private void rewardWinner() {
-		// TODO Auto-generated method stub
-		
+	private void rewardWinner(float modifier, int i) 
+	{
+		System.out.println("dealer wins");
+		jogadores.get(i).setCreditos(modifier * jogadores.get(i).getTotalBet() + jogadores.get(i).getCreditos());
+		jogadores.get(i).setTotalBet(0);
+		jogadoresInterface.get(i).p.JLabelBet.setText("Aposta = " + String.valueOf(jogadores.get(i).getTotalBet()));
+		jogadoresInterface.get(i).p.JLabelCredits.setText("Creditos = " + String.valueOf(jogadores.get(i).getCreditos()));
+		jogadoresInterface.get(i).repaint();
 	}
 
 	public void Dealer_Deal()
 	{
 		dealer.addCarta(deck.Draw());
+		windowDealer.hideHiddenCard();
 		dealer.addCarta(deck.Draw());
 		dealer.setDealt(true);
 		
@@ -367,15 +401,7 @@ public class GameManager
 	}
 	
 	public void Dealer_Hit()
-	{
-		for(int i = 0; i < jogadores.size() - 1; i++)
-		{
-			if(jogadores.get(i).getPontos() == 21)
-			{
-				winner = jogadores.get(i);
-			}
-		}
-		
+	{	
 		Carta topDeck = deck.Draw();
 		dealer.addCarta(topDeck);
 		

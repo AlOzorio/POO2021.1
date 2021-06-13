@@ -27,5 +27,29 @@ public class NewJFrameDealer extends JFrame {
 		getContentPane().add(p);
 		
 	}
+
+	public void showHiddenCard() 
+	{
+		p.showHidenCard();	
+	}
 	
+	public void hideHiddenCard() 
+	{
+		p.hideHidenCard();	
+	}
+	
+	public void setIsHiiden(Boolean value) 
+	{
+		p.setIsHidden(value);	
+	}
+	
+	public Boolean getIsHidden() 
+	{
+		return p.getIsHidden();	
+	}
+	
+	public void resetPrizePoolLabel()
+	{
+		p.getPrizePoolLabel().setText("Aposta total = " + String.valueOf(this.GameManager.prizePool));
+	}
 }

@@ -117,13 +117,13 @@ public class Jogador
 		this.out = valor;
 	}
 
-	public boolean getBlackjack() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	public boolean setBlackjack(Boolean blackjack) {
-		// TODO Auto-generated method stub
+	public boolean getBlackjack() 
+	{
+		if(this.mao.size() == 2 && this.getPontos() == 21)
+		{
+			return true;
+		}
+		
 		return false;
 	}
 }
