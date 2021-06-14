@@ -88,7 +88,7 @@ public class NewJPanelPlayer extends JPanel
 		
 	}
 	
-	// Funcoes referentes ao clique de cada botao
+	// Fun��es referentes ao clique de cada bot�o
 	private void ButtonClickDouble() {
 		// TODO Auto-generated method stub
 		if (this == GameManager.jogadoresInterface.get(GameManager.turn).getInterface(GameManager.n_mao).p) 
@@ -153,12 +153,11 @@ public class NewJPanelPlayer extends JPanel
 		
 	}
 
-	// Desenha os elementos da interface da mao do jogador
+	// Desenha os elementos da tela do jogador
 	public void paintComponent(Graphics G)
 	{
 		super.paintComponent(G);
 		G.drawImage(this.imgBkg, 0, 0, 1000, 650, getFocusCycleRootAncestor());
-		System.out.println(this.mao_number);
 		for (int i = 0; i < player.getMao(this.mao_number).getCartas().size(); i++)
 		{
 			G.drawImage(readImage("Resources/" + player.getMao(this.mao_number).getCartas().get(i).GetIndex() + ".gif"), i*120 + 300, 400, 73, 97, getFocusCycleRootAncestor());	
@@ -168,7 +167,7 @@ public class NewJPanelPlayer extends JPanel
 		JLabelCredits.setText("Creditos = " + String.valueOf(player.getCreditos()));
 	}
 	
-	// Obtem a imagem da carta para ser renderizada
+	// Obtem a imagem da carta
 	private Image readImage(String ImgName)
 	{
 		try 
@@ -187,4 +186,10 @@ public class NewJPanelPlayer extends JPanel
 	{
 		this.player = player;
 	}
+
+	public Object getMao(int n_mao) 
+	{
+		return null;
+	}
+
 }

@@ -174,7 +174,7 @@ public class GameManager
 	
 	public void Stand()
 	{
-		// Desabilita os botoes¿½es do jogador e realiza a passagem de turno
+		// Desabilita os botoesï¿½ï¿½es do jogador e realiza a passagem de turno
 		JOptionPane.showMessageDialog(null,"Jogador deu Stand","turno",JOptionPane.INFORMATION_MESSAGE);
 		jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonHit.setEnabled(false);
 		jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonDouble.setEnabled(false);
@@ -218,7 +218,7 @@ public class GameManager
 				currentPlayer.setOut(true, n_mao);
 				JOptionPane.showMessageDialog(null,"Jogador " + String.valueOf(turn + 1) + " estï¿½ fora da rodada","Turno",JOptionPane.INFORMATION_MESSAGE);
 			}
-			// Desabilita os outros botoes¿½es	
+			// Desabilita os outros botoesï¿½ï¿½es	
 			jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonHit.setEnabled(false);
 			jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonDouble.setEnabled(false);
 			jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonSurrender.setEnabled(false);
@@ -687,7 +687,6 @@ public class GameManager
 				
 				// carrega informacoes geral de cada mao
 				int handSize = Integer.parseInt(reader.nextLine());
-				System.out.println(jogadores.get(i).getMaoQtd());
 				jogadores.get(i).setTotalBet(Integer.parseInt(reader.nextLine()), j);
 				
 				// Loop de load das cartas
