@@ -5,12 +5,14 @@ public class Ficha {
 	private int valor;
 	private int quantidade;
 	
+	// Inicializa o objeto Ficha
 	public Ficha(int valor, int quantidade)
 	{
 		this.valor = valor;
 		this.quantidade = quantidade;
 	}
 	
+	// Funções para manipular o valor das fichas
 	public int getValor()
 	{
 		return valor;

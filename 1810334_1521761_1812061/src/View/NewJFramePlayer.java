@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import Model.Carta;
-import Model.GameManager;
+import Controller.GameManager;
 import Model.Jogador;
 
 public class NewJFramePlayer extends JFrame 
@@ -16,6 +16,7 @@ public class NewJFramePlayer extends JFrame
 	public NewJPanelPlayer p;
 	public GameManager GameManager;
 	
+	// Inicializa os JFrames referente �s telas dos jogadores
 	public NewJFramePlayer(Jogador player, int mao, GameManager gameManager)
 	{
 		Toolkit tk = Toolkit.getDefaultToolkit();

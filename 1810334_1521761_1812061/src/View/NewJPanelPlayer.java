@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import Controller.GameManager;
 import Model.Carta;
-import Model.GameManager;
 import Model.Jogador;
 
 public class NewJPanelPlayer extends JPanel 
@@ -18,6 +18,7 @@ public class NewJPanelPlayer extends JPanel
 	private Image imgBkg;
 	private Image cardTest;
 	Jogador player;
+	// Bot�es e labels do jogador
 	public JButton JButtonDeal = new JButton("Deal");
 	public JButton JButtonHit = new JButton("Hit");
 	public JButton JButtonSplit = new JButton("Split");
@@ -28,7 +29,7 @@ public class NewJPanelPlayer extends JPanel
 	public JLabel JLabelCredits = new JLabel("Creditos = 500");
 	private JLabel JLabelSum = new JLabel("Soma das cartas = 0");
 	private int mao_number;
-	GameManager GameManager;
+	GameManager GameManager; // Refer�ncia ao GameManager 
 	
 	public NewJPanelPlayer(GameManager gameManager, int mao) 
 	{
@@ -39,6 +40,7 @@ public class NewJPanelPlayer extends JPanel
 		
 		GameManager = gameManager;
 
+		// Adiciona fun��es aos bot�es 
 		JButtonDeal.addActionListener(e -> ButtonClickDeal());
 		JButtonHit.addActionListener(e -> ButtonClickHit());
 		JButtonSplit.addActionListener(e -> ButtonClickSplit());
@@ -61,6 +63,7 @@ public class NewJPanelPlayer extends JPanel
 		JButtonStand.setEnabled(false);
 		JButtonDouble.setEnabled(false);
 		
+		// Define a posi��o dos bot�es e labels na janela dos jogadores
 		for (int i = 0; i < JButtonList.size(); i++) {
 			JButtonList.get(i).setVisible(true);
 			JButtonList.get(i).setBounds(110+(i*130), 550, 100, 50);
@@ -79,6 +82,7 @@ public class NewJPanelPlayer extends JPanel
 		
 	}
 	
+	// Fun��es referentes ao clique de cada bot�o
 	private void ButtonClickDouble() {
 		// TODO Auto-generated method stub
 		if (this == GameManager.jogadoresInterface.get(GameManager.turn).getInterface(GameManager.n_mao).p) 
@@ -143,6 +147,7 @@ public class NewJPanelPlayer extends JPanel
 		
 	}
 
+	// Desenha os elementos da tela do jogador
 	public void paintComponent(Graphics G)
 	{
 		super.paintComponent(G);
@@ -156,6 +161,7 @@ public class NewJPanelPlayer extends JPanel
 		JLabelCredits.setText("Creditos = " + String.valueOf(player.getCreditos()));
 	}
 	
+	// Obtem a imagem da carta
 	private Image readImage(String ImgName)
 	{
 		try 
@@ -169,6 +175,7 @@ public class NewJPanelPlayer extends JPanel
 		return null;
 	}
 
+	// Associa o jogador a janela
 	public void setPlayer(Jogador player) 
 	{
 		this.player = player;

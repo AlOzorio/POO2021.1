@@ -6,6 +6,7 @@ public class Carta
 	private int valor;
 	private String nome;
 	
+	// Inicalizaï¿½ï¿½o do objeto carta
 	public Carta(String cardSuite, int cardValue, String cardName)
 	{
 		this.naipe = cardSuite;
@@ -13,16 +14,31 @@ public class Carta
 		this.nome = cardName;
 	}
 	
+	
+	// Funï¿½ï¿½es para obter e mudar o nome das cartas
 	public String GetName()
 	{
 		return this.nome;
 	}
 
+	public void SetName(String nome)
+	{
+		this.nome = nome;
+	}
+	
+	
+	// Funï¿½ï¿½es para obter e mudar o naipe das cartas
 	public String GetSuite()
 	{
 		return this.naipe;
 	}
 
+	public void SetSuite(String naipe)
+	{
+		this.naipe = naipe;
+	}
+	
+	// Obtem o nome da carta para encontrar a imagem referente
 	public String GetIndex()
 	{
 		if (this.valor < 10 && this.valor > 1) {
@@ -31,12 +47,12 @@ public class Carta
 		return String.valueOf(this.nome.charAt(0)) + this.naipe.charAt(0) ;
 	}
 
+	// Funï¿½ï¿½es para manipular o valor da carta
 	public int GetValue()
 	{
 		return this.valor;
 	}
 	
-	//A seguinte função abaixo serve para alterar o valor do as, quando necessário
 	public void SetValue(int newValue)
 	{
 		this.valor = newValue;

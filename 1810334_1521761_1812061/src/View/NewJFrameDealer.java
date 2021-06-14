@@ -4,15 +4,17 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
+import Controller.GameManager;
 import Model.Dealer;
-import Model.GameManager;
 
 public class NewJFrameDealer extends JFrame {
 
 	public GameManager GameManager;
 	NewJPanelDealer p;
 	
+	// Inicializa o JFrame referente ao delar
 	public NewJFrameDealer(Dealer dealer, GameManager gameManager)
 	{
 		Toolkit tk = Toolkit.getDefaultToolkit();
@@ -28,6 +30,7 @@ public class NewJFrameDealer extends JFrame {
 		
 	}
 
+	// Wrappers para manipular a carta virada para baixo do dealer
 	public void showHiddenCard() 
 	{
 		p.showHidenCard();	
@@ -48,8 +51,19 @@ public class NewJFrameDealer extends JFrame {
 		return p.getIsHidden();	
 	}
 	
+	// Métodos para obter e manipular os JLabels da tela do dealer
 	public void resetPrizePoolLabel()
 	{
 		p.getPrizePoolLabel().setText("Aposta total = " + String.valueOf(this.GameManager.prizePool));
+	}
+	
+	public JLabel getPrizePoolLabel()
+	{
+		return p.getPrizePoolLabel();
+	}
+	
+	public JLabel getSumLabel()
+	{
+		return p.getSumLabel();
 	}
 }

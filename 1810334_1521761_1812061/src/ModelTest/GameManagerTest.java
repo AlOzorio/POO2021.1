@@ -3,10 +3,12 @@ package ModelTest;
 import Model.Jogador;
 import Model.Carta;
 import Model.Ficha;
-import Model.GameManager;
+
 import static org.junit.Assert.*;
 import java.util.*;
 import org.junit.Test;
+
+import Controller.GameManager;
 
 public class GameManagerTest 
 {
@@ -17,7 +19,7 @@ public class GameManagerTest
 		GM.NewGame(0);
 		
 		assertNotNull(GM.deck);
-		assertNotNull(GM.prizePool.get(0));
+
 		assertNotNull(GM.currentPlayer);
 		assertNotNull(GM.turn);
 		assertNull(GM.winner);
@@ -53,16 +55,6 @@ public class GameManagerTest
 		ArrayList<Carta> mao = (ArrayList<Carta>) GM.currentPlayer.getMao().clone();
 		GM.Hit();
 		assertNotSame(mao,GM.currentPlayer.getMao());
-	}
-	
-	@Test
-	public void TestPP() 
-	{
-		GM.NewGame(0);
-		
-		ArrayList<Ficha> pp = (ArrayList<Ficha>) GM.prizePool.clone();
-		GM.AddToPrizePool(50);
-		assertNotSame(pp,GM.prizePool);
 	}
 	
 	@Test

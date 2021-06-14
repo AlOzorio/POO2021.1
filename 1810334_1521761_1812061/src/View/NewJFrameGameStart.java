@@ -7,6 +7,7 @@ public class NewJFrameGameStart extends JFrame
 { 
 	NewJPanelGameStart p = new NewJPanelGameStart();
 	
+	// Inicializa o JFrame referente a tela inicial
 	public NewJFrameGameStart()
 	{
 		Toolkit tk = Toolkit.getDefaultToolkit();
@@ -19,6 +20,7 @@ public class NewJFrameGameStart extends JFrame
 		
 	}
 	
+	// Obtem o JPanel referente a tela inicial
 	public NewJPanelGameStart GetP()
 	{
 		return p;

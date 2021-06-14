@@ -13,12 +13,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Controller.GameManager;
 import Model.Jogador;
 import Model.Dealer;
-import Model.GameManager;
 
 public class NewJPanelDealer extends JPanel {
 
+	// Imagens referentes aos elementos do jogo, como fichas e versos de carta
 	private Image imgBkg;
 	private Image deck;
 	private Image back;
@@ -28,15 +29,20 @@ public class NewJPanelDealer extends JPanel {
 	private Image imgCoin20;
 	private Image imgCoin50;
 	private Image imgCoin100;
+	// Objeto dealer para possuir acesso as suas fun��es
 	Dealer dealer;
+	// Bot�es e labels da tela do dealer 
 	private JButton JButtonQuit = new JButton("Quit");
 	private JButton JButtonClear = new JButton("Clear");
 	private JButton JButtonSave = new JButton("Save");
 	private JLabel JLabelPrizePool = new JLabel("Aposta total = 0");
 	private JLabel JLabelSum = new JLabel("Soma das cartas = 0");
+	// Refer�ncia ao GameManager
 	GameManager GameManager;
+	// Booleana que indica se a carta est� de cabe�a para baixo
 	private Boolean isHidden;
 	
+	// Inicializa o pinel do dealer
 	public NewJPanelDealer(GameManager gameManager) 
 	{
 		GameManager = gameManager;
@@ -52,6 +58,7 @@ public class NewJPanelDealer extends JPanel {
 		imgCoin100 = readImage("Resources/ficha 100$.png");
 		this.setLayout(null);
 		
+		// Acrescenta o mouse listener � janela
 		addMouseListener(new MouseAdapter()
 			{
 				public void mousePressed(MouseEvent e)
@@ -61,10 +68,12 @@ public class NewJPanelDealer extends JPanel {
 			}
 		);
 		
+		// Adiciona as fun��es dos bot�es
 		JButtonQuit.addActionListener(e -> ButtonClickQuit());
 		JButtonClear.addActionListener(e -> ButtonClickClear());
 		JButtonSave.addActionListener(e -> ButtonClickSave());
 		
+		// Define a posi��o dos bot�es e labels na janela
 		ArrayList<JButton> JButtonList = new ArrayList<JButton>();
 		JButtonList.add(JButtonQuit);
 		JButtonList.add(JButtonClear);
@@ -85,9 +94,17 @@ public class NewJPanelDealer extends JPanel {
 		
 	}
 	
-	private void ButtonClickSave() 
-	{
-		//Prox Iteracao
+	// Fun��es para os bot�es do dealer
+	private void ButtonClickSave()
+	{		
+		try 
+		{
+			GameManager.SaveGame();
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	private void ButtonClickClear() 
@@ -100,6 +117,7 @@ public class NewJPanelDealer extends JPanel {
 		GameManager.Quit();
 	}
 	
+	// Desenha os elementos da tela do dealer
 	public void paintComponent(Graphics G)
 	{
 		super.paintComponent(G);
@@ -125,7 +143,7 @@ public class NewJPanelDealer extends JPanel {
 		}
 	}
 	
-	
+	// Obtem a imagem das cartas 
 	private Image readImage(String ImgName)
 	{
 		try 
@@ -139,11 +157,13 @@ public class NewJPanelDealer extends JPanel {
 		return null;
 	}
 	
+	// Inicializa o dealer
 	public void setDealer(Dealer dealer) {
 		// TODO Auto-generated method stub
 		this.dealer = dealer;
 	}
 	
+	// Reconhece os cliques em cima das fichas para a realiza��o de apostas 
 	private void mouseClick(int x, int y)
 	{
 		if ((x >= 725 && x <= 725 + 50) && (y >= 350 && y <= 350 + 50)) 
@@ -170,12 +190,14 @@ public class NewJPanelDealer extends JPanel {
 		{
 			GameManager.AddToPrizePool(100);
 		}
-
+		
+		// Atualiza os labels da tela do dealer e dos jogadores
 		JLabelPrizePool.setText("Aposta total = " + String.valueOf(GameManager.prizePool));
 		GameManager.jogadoresInterface.get(GameManager.turn).getInterface(0).p.JLabelBet.setText("Aposta = " + String.valueOf(GameManager.currentPlayer.getTotalBet(0)));
 		GameManager.jogadoresInterface.get(GameManager.turn).getInterface(0).p.JLabelCredits.setText("Creditos = " + String.valueOf(GameManager.currentPlayer.getCreditos()));
 	}
 
+	// Fun��es para manipular a carta virada para baixo
 	public Boolean getIsHidden()
 	{
 		return isHidden;
@@ -205,9 +227,15 @@ public class NewJPanelDealer extends JPanel {
 		}
 	}
 	
+	// Fun��es para manipular os labels da tela do dealer
 	public JLabel getPrizePoolLabel()
 	{
 		return JLabelPrizePool;
+	}
+	
+	public JLabel getSumLabel()
+	{
+		return JLabelSum;
 	}
 
 }
