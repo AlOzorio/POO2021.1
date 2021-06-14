@@ -21,7 +21,7 @@ public class NewJPanelPlayer extends JPanel
 	private Image imgBkg;
 	private Image cardTest;
 	Jogador player;
-	// Bot�es e labels do jogador
+	// Botoes e labels do jogador
 	public JButton JButtonDeal = new JButton("Deal");
 	public JButton JButtonHit = new JButton("Hit");
 	public JButton JButtonSplit = new JButton("Split");
@@ -32,7 +32,7 @@ public class NewJPanelPlayer extends JPanel
 	public JLabel JLabelCredits = new JLabel("Creditos = 500");
 	private JLabel JLabelSum = new JLabel("Soma das cartas = 0");
 	private int mao_number;
-	GameManager GameManager; // Refer�ncia ao GameManager 
+	GameManager GameManager; // Referencia ao GameManager 
 	
 	public NewJPanelPlayer(GameManager gameManager, int mao) 
 	{
@@ -43,7 +43,7 @@ public class NewJPanelPlayer extends JPanel
 		
 		GameManager = gameManager;
 
-		// Adiciona fun��es aos bot�es 
+		// Adiciona listeners de acoes que ativam funcoes aos botoes 
 		JButtonDeal.addActionListener(e -> ButtonClickDeal());
 		JButtonHit.addActionListener(e -> ButtonClickHit());
 		JButtonSplit.addActionListener(e -> ButtonClickSplit());
@@ -51,6 +51,7 @@ public class NewJPanelPlayer extends JPanel
 		JButtonStand.addActionListener(e -> ButtonClickStand());
 		JButtonDouble.addActionListener(e -> ButtonClickDouble());
 		
+		// adiciona os botoes numa lista pra facilitar a manipulacao inicial
 		ArrayList<JButton> JButtonList = new ArrayList<JButton>();
 		JButtonList.add(JButtonDeal);
 		JButtonList.add(JButtonHit);
@@ -59,6 +60,7 @@ public class NewJPanelPlayer extends JPanel
 		JButtonList.add(JButtonStand);
 		JButtonList.add(JButtonDouble);
 
+		// inicia todos eles desligados, seram ligados quando necessario
 		JButtonDeal.setEnabled(false);
 		JButtonHit.setEnabled(false);
 		JButtonSplit.setEnabled(false);
@@ -66,13 +68,14 @@ public class NewJPanelPlayer extends JPanel
 		JButtonStand.setEnabled(false);
 		JButtonDouble.setEnabled(false);
 		
-		// Define a posi��o dos bot�es e labels na janela dos jogadores
+		// Define a posicao dos botoes e labels na janela dos jogadores
 		for (int i = 0; i < JButtonList.size(); i++) {
 			JButtonList.get(i).setVisible(true);
 			JButtonList.get(i).setBounds(110+(i*130), 550, 100, 50);
 			this.add(JButtonList.get(i));
 		}
 
+		// adiciona os labels
 		this.add(JLabelBet);
 		JLabelBet.setVisible(true);
 		JLabelBet.setBounds(870, 500, 100, 50);
@@ -85,7 +88,7 @@ public class NewJPanelPlayer extends JPanel
 		
 	}
 	
-	// Fun��es referentes ao clique de cada bot�o
+	// Funcoes referentes ao clique de cada botao
 	private void ButtonClickDouble() {
 		// TODO Auto-generated method stub
 		if (this == GameManager.jogadoresInterface.get(GameManager.turn).getInterface(GameManager.n_mao).p) 
@@ -150,7 +153,7 @@ public class NewJPanelPlayer extends JPanel
 		
 	}
 
-	// Desenha os elementos da tela do jogador
+	// Desenha os elementos da interface da mao do jogador
 	public void paintComponent(Graphics G)
 	{
 		super.paintComponent(G);
@@ -165,7 +168,7 @@ public class NewJPanelPlayer extends JPanel
 		JLabelCredits.setText("Creditos = " + String.valueOf(player.getCreditos()));
 	}
 	
-	// Obtem a imagem da carta
+	// Obtem a imagem da carta para ser renderizada
 	private Image readImage(String ImgName)
 	{
 		try 
@@ -184,10 +187,4 @@ public class NewJPanelPlayer extends JPanel
 	{
 		this.player = player;
 	}
-
-	public Object getMao(int n_mao) 
-	{
-		return null;
-	}
-
 }

@@ -32,17 +32,17 @@ public class NewJPanelDealer extends JPanel {
 	private Image imgCoin20;
 	private Image imgCoin50;
 	private Image imgCoin100;
-	// Objeto dealer para possuir acesso as suas fun��es
+	// Objeto dealer para possuir acesso as suas funcoes
 	Dealer dealer;
-	// Bot�es e labels da tela do dealer 
+	// Botoes e labels da tela do dealer 
 	private JButton JButtonQuit = new JButton("Quit");
 	private JButton JButtonClear = new JButton("Clear");
 	private JButton JButtonSave = new JButton("Save");
 	private JLabel JLabelPrizePool = new JLabel("Aposta total = 0");
 	private JLabel JLabelSum = new JLabel("Soma das cartas = 0");
-	// Refer�ncia ao GameManager
+	// Referencia ao GameManager
 	GameManager GameManager;
-	// Booleana que indica se a carta est� de cabe�a para baixo
+	// Booleana que indica se a carta esta de cabeca para baixo
 	private Boolean isHidden;
 	
 	// Inicializa o pinel do dealer
@@ -61,7 +61,7 @@ public class NewJPanelDealer extends JPanel {
 		imgCoin100 = readImage("Resources/ficha 100$.png");
 		this.setLayout(null);
 		
-		// Acrescenta o mouse listener � janela
+		// Acrescenta o mouse listener a janela
 		addMouseListener(new MouseAdapter()
 			{
 				public void mousePressed(MouseEvent e)
@@ -71,12 +71,12 @@ public class NewJPanelDealer extends JPanel {
 			}
 		);
 		
-		// Adiciona as fun��es dos bot�es
+		// Adiciona as funcoes dos botoes
 		JButtonQuit.addActionListener(e -> ButtonClickQuit());
 		JButtonClear.addActionListener(e -> ButtonClickClear());
 		JButtonSave.addActionListener(e -> ButtonClickSave());
 		
-		// Define a posi��o dos bot�es e labels na janela
+		// Define a posicao dos botoes e labels na janela
 		ArrayList<JButton> JButtonList = new ArrayList<JButton>();
 		JButtonList.add(JButtonQuit);
 		JButtonList.add(JButtonClear);
@@ -97,7 +97,7 @@ public class NewJPanelDealer extends JPanel {
 		
 	}
 	
-	// Fun��es para os bot�es do dealer
+	// Funcoes para os botoes do dealer
 	private void ButtonClickSave()
 	{		
 		try 
@@ -166,7 +166,7 @@ public class NewJPanelDealer extends JPanel {
 		this.dealer = dealer;
 	}
 	
-	// Reconhece os cliques em cima das fichas para a realiza��o de apostas 
+	// Reconhece os cliques em cima das fichas para a realizao de apostas 
 	private void mouseClick(int x, int y)
 	{
 		if ((x >= 725 && x <= 725 + 50) && (y >= 350 && y <= 350 + 50)) 
@@ -200,7 +200,7 @@ public class NewJPanelDealer extends JPanel {
 		GameManager.jogadoresInterface.get(GameManager.turn).getInterface(0).p.JLabelCredits.setText("Creditos = " + String.valueOf(GameManager.currentPlayer.getCreditos()));
 	}
 
-	// Fun��es para manipular a carta virada para baixo
+	// Funcoes para manipular a carta virada para baixo
 	public Boolean getIsHidden()
 	{
 		return isHidden;
@@ -230,7 +230,7 @@ public class NewJPanelDealer extends JPanel {
 		}
 	}
 	
-	// Fun��es para manipular os labels da tela do dealer
+	// Funcoes para manipular os labels da tela do dealer
 	public JLabel getPrizePoolLabel()
 	{
 		return JLabelPrizePool;

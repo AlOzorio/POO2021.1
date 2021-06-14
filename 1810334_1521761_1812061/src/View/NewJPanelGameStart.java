@@ -42,7 +42,7 @@ public class NewJPanelGameStart extends JPanel {
 		JButtonList.add(this.Player4);
 		JButtonList.add(this.CarregarJogo);
 		
-		// Define a posição dos botões na janela
+		// Define a posição dos botoes na janela
 		for (int i = 0; i < 5; i++) {
 			this.add(JButtonList.get(i));
 			JButtonList.get(i).setVisible(true);
@@ -67,7 +67,7 @@ public class NewJPanelGameStart extends JPanel {
 		}	
 	}
 
-	// Funções para iniciar o jogo de acordo com o botão selecionado
+	// Funções para iniciar o jogo de acordo com o botao selecionado
 	private void ButtonClick(int i) {
 		this.numero = i;
 		createGame();
@@ -81,7 +81,6 @@ public class NewJPanelGameStart extends JPanel {
 	
 	public void createGame()
 	{
-		//openWindows(this.numero);
 		gm.NewGame(this.numero);
 	}
 }

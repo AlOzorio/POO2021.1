@@ -19,7 +19,7 @@ public class NewJFramePlayer extends JFrame
 	public NewJPanelPlayer p;
 	public GameManager GameManager;
 	
-	// Inicializa os JFrames referente �s telas dos jogadores
+	// Inicializa os JFrames referente as telas dos jogadores
 	public NewJFramePlayer(Jogador player, int mao, GameManager gameManager)
 	{
 		Toolkit tk = Toolkit.getDefaultToolkit();
@@ -30,7 +30,6 @@ public class NewJFramePlayer extends JFrame
 		setLocation(screenSize.width/2 - 500, screenSize.height/2 - 350);
 		this.GameManager = gameManager;
 		p = new NewJPanelPlayer(this.GameManager, mao);
-		//p.add(new NewJPanelPlayer(this.GameManager));
 		p.setBorder(null);
 		p.setPlayer(player);
 		getContentPane().add(p);

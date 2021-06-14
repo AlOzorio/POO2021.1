@@ -9,7 +9,7 @@ public class Carta
 	private int valor;
 	private String nome;
 	
-	// Inicaliza��o do objeto carta
+	// Inicalizacao do objeto carta
 	public Carta(String cardSuite, int cardValue, String cardName)
 	{
 		this.naipe = cardSuite;
@@ -18,7 +18,7 @@ public class Carta
 	}
 	
 	
-	// Fun��es para obter e mudar o nome das cartas
+	// Funcoes para obter e mudar o nome das cartas
 	public String GetName()
 	{
 		return this.nome;
@@ -30,7 +30,7 @@ public class Carta
 	}
 	
 	
-	// Fun��es para obter e mudar o naipe das cartas
+	// Funcoes para obter e mudar o naipe das cartas
 	public String GetSuite()
 	{
 		return this.naipe;
@@ -50,7 +50,7 @@ public class Carta
 		return String.valueOf(this.nome.charAt(0)) + this.naipe.charAt(0) ;
 	}
 
-	// Fun��es para manipular o valor da carta
+	// Funcoes para manipular o valor da carta
 	public int GetValue()
 	{
 		return this.valor;
