@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class GameManager 
 {
-	//Para realizaï¿½ï¿½o dos testes, as variï¿½veis abaixo foram postas como pï¿½blicas
+	//Para realizacao dos testes, as variaveis abaixo foram postas como publicas
 	public static ArrayList<Jogador> jogadores = new ArrayList<Jogador>();
 	public static ArrayList<Interfaces> jogadoresInterface = new ArrayList<Interfaces>();
 	public NewJFrameDealer windowDealer;
@@ -38,7 +38,7 @@ public class GameManager
 	
 	public void NewGame(int playerCount)
 	{
-		for (int i = 0; i < playerCount; i++) // Inicializaï¿½ï¿½ dos jogadores e suas interfaces
+		for (int i = 0; i < playerCount; i++) // Inicializacao dos jogadores e suas interfaces
 		{
 			Jogador player = new Jogador();
 			jogadores.add(player);
@@ -47,7 +47,7 @@ public class GameManager
 			playerInterface.getInterface(0).setTitle("Jogador " + String.valueOf(i+1));
 			jogadoresInterface.add(playerInterface);
 		}
-		// Inicializaï¿½ï¿½o do dealer
+		// Inicializacao do dealer
 		dealer = new Dealer();
 		windowDealer = new NewJFrameDealer(dealer, this);
 		windowDealer.setTitle("Dealer");
@@ -59,18 +59,16 @@ public class GameManager
 		//define o primeiro jogador a agir
 		currentPlayer = jogadores.get(turn);
 		
-		//Inicializaï¿½ï¿½o do baralho
+		//Inicializacao do baralho
 		deck.IniciaBaralho();
 		deck.Embaralhar();
-		deck.AddCard(new Carta("h_Copas", 10, "t_dez"));
-		deck.AddCard(new Carta("h_Copas", 10, "j_valete"));
 	}
 	
 	//region Player 
 	
 	public void AddToPrizePool(int value)
 	{
-		// Impede que o jogador aposte mais de 100 crï¿½ditos
+		// Impede que o jogador aposte mais de 100 creditos
 		if (currentPlayer.getTotalBet(n_mao) + value <= 100 && currentPlayer.getDealt() == false)
 		{
 			prizePool += value;
@@ -78,7 +76,7 @@ public class GameManager
 			currentPlayer.setCreditos(currentPlayer.getCreditos() - value);
 		}
 		
-		// Impede que o jogador de deal sem ter apostado pelo menos 20 crï¿½ditos
+		// Impede que o jogador de deal sem ter apostado pelo menos 20 creditos
 		if(currentPlayer.getTotalBet(0) >= 20 && currentPlayer.getDealt() == false)
 		{
 			jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonDeal.setEnabled(true);
@@ -93,7 +91,7 @@ public class GameManager
 	{
 		if(currentPlayer.getDealt() == false) 
 		{
-			// Concede as primeiras cartas do jogador e habilita os outros botï¿½es
+			// Concede as primeiras cartas do jogador e habilita os outros botoes
 			currentPlayer.addCarta(deck.Draw(), 0);
 			currentPlayer.addCarta(deck.Draw(), 0);
 			currentPlayer.setDealt(true);
@@ -108,16 +106,17 @@ public class GameManager
 				jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonSplit.setEnabled(true);	
 			}
 			
-			// Realiza a passagem do turno
+			// Realiza a passagem do turno para o dealer
 			if (turn == jogadores.size() - 1) 
 			{
 				turn = 0;
 				Dealer_Deal();
 			}
-			else 
+			else // avanca o turno para o proximo jogador
 			{
 				turn++;
 			}
+			//atualiza o jogador atual
 			currentPlayer = jogadores.get(turn); 
 			
 			JOptionPane.showMessageDialog(null,"Jogador " + String.valueOf(turn + 1) + " deu Deal","Turno",JOptionPane.INFORMATION_MESSAGE);
@@ -126,14 +125,18 @@ public class GameManager
 	
 	public void Split()
 	{
+		// avisa para o jogador fazer o slit e criar a nova mao
 		currentPlayer.split();
 		
+		//cria uma nova interface para a nova mao
 		jogadoresInterface.get(turn).addNewMao(currentPlayer, 1, this);
 		jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonSplit.setEnabled(false);	
 		
+		// atualiza os titulos das janelas
 		jogadoresInterface.get(turn).getInterface(n_mao).setTitle("Jogador " + String.valueOf(turn+1) + " Mao " + String.valueOf(n_mao+1));
 		jogadoresInterface.get(turn).getInterface(n_mao+1).setTitle("Jogador " + String.valueOf(turn+1) + " Mao " + String.valueOf(n_mao+2));
 
+		// liga e desliga os botoes necessarios
 		jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonSurrender.setEnabled(false);
 		jogadoresInterface.get(turn).getInterface(n_mao + 1).p.JButtonDeal.setEnabled(false);			
 		jogadoresInterface.get(turn).getInterface(n_mao + 1).p.JButtonHit.setEnabled(true);
@@ -152,14 +155,14 @@ public class GameManager
 		if(jogadores.get(turn).getOut(n_mao) == false && currentPlayer != null)
 		{
 			JOptionPane.showMessageDialog(null,"Jogador " + String.valueOf(turn + 1) + " deu Hit","Turno",JOptionPane.INFORMATION_MESSAGE);
-			// Desabilita os botï¿½es de double e surrender apï¿½s receber a terceira carta
+			// Desabilita os botoes de double e surrender apos receber a terceira carta
 			jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonDouble.setEnabled(false);
 			jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonSurrender.setEnabled(false);
 			Carta topDeck = deck.Draw();
 			currentPlayer.addCarta(topDeck, n_mao);
 		}
 		
-		// Desabilita os botï¿½es caso o jogador ultrapasse 21 pontos
+		// Desabilita os botoes caso o jogador ultrapasse 21 pontos
 		if(jogadores.get(turn).getPontos(n_mao) > 21)
 		{
 			jogadores.get(turn).setOut(true, n_mao);
@@ -171,7 +174,7 @@ public class GameManager
 	
 	public void Stand()
 	{
-		// Desabilita os botï¿½es do jogador e realiza a passagem de turno
+		// Desabilita os botoes¿½es do jogador e realiza a passagem de turno
 		JOptionPane.showMessageDialog(null,"Jogador deu Stand","turno",JOptionPane.INFORMATION_MESSAGE);
 		jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonHit.setEnabled(false);
 		jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonDouble.setEnabled(false);
@@ -203,7 +206,7 @@ public class GameManager
 	{
 		if (currentPlayer.getCreditos() >= currentPlayer.getTotalBet(n_mao) && currentPlayer.getMao(n_mao).getCartas().size() <= 2)
 		{
-			// Dobra a aposta do jogador e concede a prï¿½xima carta
+			// Dobra a aposta do jogador e concede a proxima carta
 			JOptionPane.showMessageDialog(null,"Jogador " + String.valueOf(turn + 1) + " deu Double","Turno",JOptionPane.INFORMATION_MESSAGE);
 			currentPlayer.setCreditos(currentPlayer.getCreditos() - currentPlayer.getTotalBet(n_mao));
 			currentPlayer.addToBet(currentPlayer.getTotalBet(n_mao), n_mao);
@@ -215,7 +218,7 @@ public class GameManager
 				currentPlayer.setOut(true, n_mao);
 				JOptionPane.showMessageDialog(null,"Jogador " + String.valueOf(turn + 1) + " estï¿½ fora da rodada","Turno",JOptionPane.INFORMATION_MESSAGE);
 			}
-			// Desabilita os outros botï¿½es	
+			// Desabilita os outros botoes¿½es	
 			jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonHit.setEnabled(false);
 			jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonDouble.setEnabled(false);
 			jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonSurrender.setEnabled(false);
@@ -293,6 +296,8 @@ public class GameManager
 		currentPlayer.setCreditos(currentPlayer.getTotalBet(n_mao)/2 + currentPlayer.getCreditos());
 		currentPlayer.setTotalBet(currentPlayer.getTotalBet(n_mao)/2, n_mao);
 		prizePool -= currentPlayer.getTotalBet(n_mao)/2;
+		
+		// atualiza a interace sobre a desistencia
 		jogadoresInterface.get(turn).repaintInterfaces();
 		jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonHit.setEnabled(false);
 		jogadoresInterface.get(turn).getInterface(n_mao).p.JButtonDouble.setEnabled(false);
@@ -302,6 +307,7 @@ public class GameManager
 	public void Quit()
 	{
 		JOptionPane.showMessageDialog(null,"Jogador " + String.valueOf(turn + 1) + " abandonou a partida","Jogo",JOptionPane.INFORMATION_MESSAGE);
+		
 		if (currentPlayer.getMao(n_mao).getCartas().size() > 0)
 		{
 			// Retorna as cartas do jogador para o baralho
@@ -318,14 +324,14 @@ public class GameManager
 		jogadores.remove(turn);
 		jogadoresInterface.remove(turn);
 		
-		// Se nï¿½o houver mais jogadores, encerra o programa
+		// Se nao houver mais jogadores, encerra o programa
 		if(jogadores.size() == 0)
 		{
-			JOptionPane.showMessageDialog(null,"Todos os jogadores saï¿½ram. Encerrando partida","Jogo",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Todos os jogadores sairam. Encerrando partida","Jogo",JOptionPane.INFORMATION_MESSAGE);
 			System.exit(0);
 		}
 		
-		// Passa o turno para o prï¿½ximo jogador
+		// Passa o turno para o proximo jogador
 		if(turn == jogadores.size())
 		{
 			turn = turn - 1;
@@ -358,6 +364,7 @@ public class GameManager
 				}
 			}
 			
+			// Se algum jogadir poissui blackjack o dealer deve mostrar q tem ou nao o blackjack escondido
 			if (dealerNeedToShowCard == true)
 			{
 				windowDealer.showHiddenCard();
@@ -385,7 +392,7 @@ public class GameManager
 					{
 						for(int j = 0; j < jogadores.get(i).getMaoQtd(); j++)
 						{
-							// Caso 2: Jogador possui blackjack, mas dealer nï¿½o
+							// Caso 2: Jogador possui blackjack, mas dealer nao
 							if(jogadores.get(i).getBlackjack(j) == true)
 							{
 								JOptionPane.showMessageDialog(null,"Blackjack para o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
@@ -416,7 +423,7 @@ public class GameManager
 		
 		windowDealer.showHiddenCard();
 		
-		// Caso 4: Jogador tem blackjack e dealer nï¿½o
+		// Caso 4: Jogador tem blackjack e dealer nao
 		for(int i = 0; i < jogadores.size(); i++)
 		{
 			for(int j = 0; j < jogadores.get(i).getMaoQtd(); j++)
@@ -429,36 +436,44 @@ public class GameManager
 			}
 		}
 		
+		// Dealar saca ate ter n minimo 18 pontos
 		while(dealer.getPontos(0) < 17)
 		{
 			Dealer_Hit();
 		}
-			
+		
+		// busca em cada jogador
 		for(int i = 0; i < jogadores.size(); i++)
 		{
+			// busca em cada mao
 			for(int j = 0; j < jogadores.get(i).getMaoQtd(); j++)
 			{
+				// busca uma mao que nao tenha saido e que nao possui blackjack
 				if(jogadores.get(i).getOut(j) == false && jogadores.get(i).getBlackjack(j) == false)
 				{
+					// Se tiver mais pontos que o dealer ou o dealer estourou, a mao ganha
 					if (jogadores.get(i).getPontos(j) > dealer.getPontos(0) || dealer.getPontos(0) > 21)
 					{
-						JOptionPane.showMessageDialog(null,"Vitï¿½ria ordinï¿½ria para o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null,"Vitoria ordinaria para o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
 						rewardWinner(2, i, j);
 					}
+					// Se nao ela perde
 					else
 					{
-						JOptionPane.showMessageDialog(null,"Vitï¿½ria do dealer contra o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null,"Vitoria do dealer contra o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
 						rewardWinner(0, i, j);
 					}
 				}
 				else if(jogadores.get(i).getOut(j) == true)
 				{
-					JOptionPane.showMessageDialog(null,"Vitï¿½ria do dealer contra o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
+					// Caso tiver estourado, ele perde
+					JOptionPane.showMessageDialog(null,"Vitoria do dealer contra o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
 					rewardWinner(0, i, j);
 				}
 			}
 		}
 		
+		// Como todos os vencedores ja foram recompensados, zera a prizepool
 		prizePool = 0;
 		windowDealer.resetPrizePoolLabel();
 		JOptionPane.showMessageDialog(null,"Fim da rodada","Jogo",JOptionPane.INFORMATION_MESSAGE);
@@ -470,7 +485,7 @@ public class GameManager
 	
 	private void DealerTurn()
 	{
-		// Verifica se existe algum jogador cuja pontuaï¿½ï¿½o nï¿½o ultrapassou 21
+		// Verifica se existe algum jogador cuja pontuacao nao ultrapassou 21
 		Boolean theresPossibleWinner = false;		
 		for(int i = 0; i < jogadores.size(); i++)
 		{
@@ -484,22 +499,24 @@ public class GameManager
 			}
 		}
 		
-		// Verifica a condiï¿½ï¿½o de vitï¿½ria de cada jogador
+		// Verifica a condicao de vitoria de cada jogador
 		if (theresPossibleWinner == true)
 		{
 			DeclareWinner();
 		}
+		// Se nao houver possivel vendedor, passa por todas as maos de todos os jogadores e declara a derrota de todos
 		else
 		{
 			for(int i = 0; i < jogadores.size(); i++)
 			{
-				for (int j = 0; j < jogadores.size(); j++) 
+				for (int j = 0; j < jogadores.get(i).getMaoQtd(); j++) 
 				{
-					JOptionPane.showMessageDialog(null,"Vitï¿½ria do dealer contra o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null,"Vitoria do dealer contra o jogador " + String.valueOf(i + 1),"Jogo",JOptionPane.INFORMATION_MESSAGE);
 					rewardWinner(0, i, j);
 				}
 				
 			}
+			// Reseta o prizepool no caso de nao haver vencedor
 			prizePool = 0;
 			windowDealer.resetPrizePoolLabel();
 			JOptionPane.showMessageDialog(null,"Fim da rodada","Jogo",JOptionPane.INFORMATION_MESSAGE);
@@ -509,12 +526,17 @@ public class GameManager
 	
 	private void rewardWinner(float modifier, int i, int mao_num) 
 	{
-		// Distribui a premiaï¿½ï¿½o para os jogadores
+		// Distribui a premiacao para a mao de cada jogador, sendo "i" o modificador do valor a receber
+		// i = 0 caso seja derrota
+		// i = 1 caso seja empate
+		// i = 2 caso seja vitoria ordinaria do jogador
+		// i = 2.5 caso seja vitoria do jogador com blackjack
+		
 		jogadores.get(i).setCreditos(modifier * jogadores.get(i).getTotalBet(mao_num) + jogadores.get(i).getCreditos());
 		jogadores.get(i).setTotalBet(0, mao_num);
 		jogadoresInterface.get(i).repaintInterfaces();
 		
-		// Se o jogador nï¿½o tiver crï¿½ditos restando, ele sai da partida.
+		// Se o jogador nao tiver creditos restando, ele sai da partida.
 		if(jogadores.get(i).getCreditos() <= 0)
 		{
 			JOptionPane.showMessageDialog(null,"Jogador " + String.valueOf(i) + " estï¿½ fora da partida","Jogo",JOptionPane.INFORMATION_MESSAGE);
@@ -531,10 +553,12 @@ public class GameManager
 	{
 		// Distribui as duas primeiras cartas para o dealer
 		dealer.addCarta(deck.Draw(), 0);
+		// Deixa a primeira carta escondida
 		windowDealer.hideHiddenCard();
 		dealer.addCarta(deck.Draw(), 0);
 		dealer.setDealt(true);
 		
+		// Tira temporariamente o valor da carta escondida da pontuacao do dealer
 		dealer.setPontos(dealer.getPontos(0) - dealer.getMao(0).getCartas().get(0).GetValue(), 0);
 	}
 	
@@ -570,7 +594,7 @@ public class GameManager
 		FileWriter writer = new FileWriter("partida.txt");
 		writer.write(String.valueOf(jogadores.size()) + "\n"); // Salva o nï¿½mero de jogadores
 		
-		// Salva as informaï¿½ï¿½es do dealer
+		// Salva as informacoes do dealer
 		writer.write(String.valueOf(dealer.getMao(0).getCartas().size()) + "\n");
 		writer.write(String.valueOf(windowDealer.getIsHidden()) + "\n");
 		writer.write(String.valueOf(dealer.getPontos(0)) + "\n");
@@ -581,12 +605,12 @@ public class GameManager
 			writer.write(dealer.getMao(0).getCartas().get(i).GetName() + "\n");
 		}
 		
-		// Salva informaï¿½ï¿½es globais
+		// Salva informacoes globais
 		writer.write(String.valueOf(prizePool) + "\n");
 		writer.write(String.valueOf(turn) + "\n");
 		writer.write(String.valueOf(n_mao) + "\n");
 		
-		// Salva as informaï¿½ï¿½es dos jogadores
+		// Salva as informacoes dos jogadores
 		for(int i = 0; i < jogadores.size(); i++)
 		{
 			// Salva a qtd de maos que o jogador tem, e a qtd de creditos
@@ -608,6 +632,7 @@ public class GameManager
 					writer.write(jogadores.get(i).getMao(j).getCartas().get(k).GetName() + "\n");
 				}
 				
+				// Salva o estado dos botoes da interface da mao
 				writer.write(String.valueOf(jogadoresInterface.get(i).getInterface(j).p.JButtonDeal.isEnabled()) + "\n");
 				writer.write(String.valueOf(jogadoresInterface.get(i).getInterface(j).p.JButtonHit.isEnabled()) + "\n");
 				writer.write(String.valueOf(jogadoresInterface.get(i).getInterface(j).p.JButtonSplit.isEnabled()) + "\n");
@@ -626,10 +651,10 @@ public class GameManager
 		File loadFile = new File("partida.txt");
 		Scanner reader = new Scanner(loadFile);
 		
-		int numPlayers = Integer.parseInt(reader.nextLine()); // Recupera o nï¿½mero de jogadores e cria uma nova partida
+		int numPlayers = Integer.parseInt(reader.nextLine()); // Recupera o numero de jogadores e cria uma nova partida
 		NewGame(numPlayers);
 		
-		// Recupera as informaï¿½ï¿½es do dealer e atualiza o jogo com elas
+		// Recupera as informacoes do dealer e atualiza o jogo com elas
 		int dealerHand = Integer.parseInt(reader.nextLine());
 		windowDealer.setIsHiiden(Boolean.parseBoolean(reader.nextLine()));
 		windowDealer.getSumLabel().setText("Soma das cartas = " + Integer.parseInt(reader.nextLine()));
@@ -660,6 +685,7 @@ public class GameManager
 					jogadores.get(i).createNewHand();
 				}
 				
+				// carrega informacoes geral de cada mao
 				int handSize = Integer.parseInt(reader.nextLine());
 				System.out.println(jogadores.get(i).getMaoQtd());
 				jogadores.get(i).setTotalBet(Integer.parseInt(reader.nextLine()), j);
@@ -672,6 +698,7 @@ public class GameManager
 					jogadores.get(i).getMao(j).addCarta(newCard);
 				}
 				
+				// Cria uma nova interface para as maos geradas pelo split 
 				if (j > 0) 
 				{
 					jogadoresInterface.get(i).addNewMao(jogadores.get(i), j, this);
@@ -679,9 +706,11 @@ public class GameManager
 					jogadoresInterface.get(i).getInterface(j).setTitle("Jogador " + String.valueOf(i+1) + " Mao " + String.valueOf(j+1));
 				}
 				
+				// e atualiza seus labels
 				jogadoresInterface.get(i).getInterface(j).p.JLabelBet.setText("Aposta = " + String.valueOf(currentPlayer.getTotalBet(j)));
 				jogadoresInterface.get(i).getInterface(j).p.JLabelCredits.setText("Creditos = " + String.valueOf(currentPlayer.getCreditos()));
-				
+
+				// Carrega o estado dos botoes da interface da mao
 				jogadoresInterface.get(i).getInterface(j).p.JButtonDeal.setEnabled(Boolean.parseBoolean(reader.nextLine()));
 				jogadoresInterface.get(i).getInterface(j).p.JButtonHit.setEnabled(Boolean.parseBoolean(reader.nextLine()));
 				jogadoresInterface.get(i).getInterface(j).p.JButtonSplit.setEnabled(Boolean.parseBoolean(reader.nextLine()));
