@@ -581,6 +581,7 @@ public class GameManager
 		// Salva informa��es globais
 		writer.write(String.valueOf(prizePool) + "\n");
 		writer.write(String.valueOf(turn) + "\n");
+		writer.write(String.valueOf(n_mao) + "\n");
 		
 		// Salva as informa��es dos jogadores
 		for(int i = 0; i < jogadores.size(); i++)
@@ -639,6 +640,7 @@ public class GameManager
 		prizePool = Float.parseFloat(reader.nextLine());
 		windowDealer.getPrizePoolLabel().setText("Aposta total = " + String.valueOf(prizePool));
 		turn = Integer.parseInt(reader.nextLine());
+		n_mao = Integer.parseInt(reader.nextLine());
 		
 		// Recupera as informacoes dos jogadores e atualiza o jogo com elas
 		// Loop de load dos jogadores
@@ -669,8 +671,9 @@ public class GameManager
 				
 				if (j > 0) 
 				{
-					jogadoresInterface.get(i).addNewMao(jogadores.get(i), j+1, this);
-					//jogadoresInterface.get(i).getInterface(j).setVisible(true);
+					jogadoresInterface.get(i).addNewMao(jogadores.get(i), j, this);
+					jogadoresInterface.get(i).getInterface(j).setVisible(true);
+					jogadoresInterface.get(i).getInterface(j).setTitle("Jogador " + String.valueOf(i+1) + " Mao " + String.valueOf(j+1));
 				}
 				
 				jogadoresInterface.get(i).getInterface(j).p.JLabelBet.setText("Aposta = " + String.valueOf(currentPlayer.getTotalBet(j)));

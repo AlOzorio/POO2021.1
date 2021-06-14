@@ -152,6 +152,7 @@ public class NewJPanelPlayer extends JPanel
 	{
 		super.paintComponent(G);
 		G.drawImage(this.imgBkg, 0, 0, 1000, 650, getFocusCycleRootAncestor());
+		System.out.println(this.mao_number);
 		for (int i = 0; i < player.getMao(this.mao_number).getCartas().size(); i++)
 		{
 			G.drawImage(readImage("Resources/" + player.getMao(this.mao_number).getCartas().get(i).GetIndex() + ".gif"), i*120 + 300, 400, 73, 97, getFocusCycleRootAncestor());	
