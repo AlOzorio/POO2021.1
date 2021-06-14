@@ -515,7 +515,10 @@ public class GameManager
 		if(jogadores.get(i).getCreditos() <= 0)
 		{
 			JOptionPane.showMessageDialog(null,"Jogador " + String.valueOf(i) + " est� fora da partida","Jogo",JOptionPane.INFORMATION_MESSAGE);
-			jogadoresInterface.get(i).setVisible(false);
+			for (int j = 0; j < jogadores.get(i).getMaoQtd(); j++) 
+			{
+				jogadoresInterface.get(i).getInterface(j).setVisible(false);
+			}
 			jogadores.remove(i);
 			jogadoresInterface.remove(i);
 		}
@@ -565,14 +568,14 @@ public class GameManager
 		writer.write(String.valueOf(jogadores.size()) + "\n"); // Salva o n�mero de jogadores
 		
 		// Salva as informa��es do dealer
-		writer.write(String.valueOf(dealer.getMao().size()) + "\n");
+		writer.write(String.valueOf(dealer.getMao(0).getCartas().size()) + "\n");
 		writer.write(String.valueOf(windowDealer.getIsHidden()) + "\n");
-		writer.write(String.valueOf(dealer.getPontos()) + "\n");
-		for(int i = 0; i < dealer.getMao().size(); i++)
+		writer.write(String.valueOf(dealer.getPontos(0)) + "\n");
+		for(int i = 0; i < dealer.getMao(0).getCartas().size(); i++)
 		{
-			writer.write(dealer.getMao().get(i).GetSuite() + "\n");
-			writer.write(String.valueOf(dealer.getMao().get(i).GetValue()) + "\n");
-			writer.write(dealer.getMao().get(i).GetName() + "\n");
+			writer.write(dealer.getMao(0).getCartas().get(i).GetSuite() + "\n");
+			writer.write(String.valueOf(dealer.getMao(0).getCartas().get(i).GetValue()) + "\n");
+			writer.write(dealer.getMao(0).getCartas().get(i).GetName() + "\n");
 		}
 		
 		// Salva informa��es globais
@@ -582,23 +585,32 @@ public class GameManager
 		// Salva as informa��es dos jogadores
 		for(int i = 0; i < jogadores.size(); i++)
 		{
-			writer.write(String.valueOf(jogadores.get(i).getMao().size()) + "\n");
-			writer.write(String.valueOf(jogadores.get(i).getTotalBet()) + "\n");
+			// Salva a qtd de maos que o jogador tem, e a qtd de creditos
+			writer.write(String.valueOf(jogadores.get(i).getMaoQtd()) + "\n");
 			writer.write(String.valueOf(jogadores.get(i).getCreditos()) + "\n");
 			
-			for(int j = 0; j < jogadores.get(i).getMao().size(); j++)
+			// for para cada uma das maos dos jogadores
+			for (int j = 0; j < jogadores.get(i).getMaoQtd(); j++) 
 			{
-				writer.write(jogadores.get(i).getMao().get(j).GetSuite() + "\n");
-				writer.write(String.valueOf(jogadores.get(i).getMao().get(j).GetValue()) + "\n");
-				writer.write(jogadores.get(i).getMao().get(j).GetName() + "\n");
+				// Salva o tamanho de cada mao e quanto esta apostado nela
+				writer.write(String.valueOf(jogadores.get(i).getMao(j).getCartas().size()) + "\n");
+				writer.write(String.valueOf(jogadores.get(i).getTotalBet(j)) + "\n");
+				
+				// for que guarda individualmente cada carta
+				for(int k = 0; k < jogadores.get(i).getMao(j).getCartas().size(); k++)
+				{
+					writer.write(jogadores.get(i).getMao(j).getCartas().get(k).GetSuite() + "\n");
+					writer.write(String.valueOf(jogadores.get(i).getMao(j).getCartas().get(k).GetValue()) + "\n");
+					writer.write(jogadores.get(i).getMao(j).getCartas().get(k).GetName() + "\n");
+				}
+				
+				writer.write(String.valueOf(jogadoresInterface.get(i).getInterface(j).p.JButtonDeal.isEnabled()) + "\n");
+				writer.write(String.valueOf(jogadoresInterface.get(i).getInterface(j).p.JButtonHit.isEnabled()) + "\n");
+				writer.write(String.valueOf(jogadoresInterface.get(i).getInterface(j).p.JButtonSplit.isEnabled()) + "\n");
+				writer.write(String.valueOf(jogadoresInterface.get(i).getInterface(j).p.JButtonSurrender.isEnabled()) + "\n");
+				writer.write(String.valueOf(jogadoresInterface.get(i).getInterface(j).p.JButtonStand.isEnabled()) + "\n");
+				writer.write(String.valueOf(jogadoresInterface.get(i).getInterface(j).p.JButtonDouble.isEnabled()) + "\n");
 			}
-			
-			writer.write(String.valueOf(jogadoresInterface.get(i).p.JButtonDeal.isEnabled()) + "\n");
-			writer.write(String.valueOf(jogadoresInterface.get(i).p.JButtonHit.isEnabled()) + "\n");
-			writer.write(String.valueOf(jogadoresInterface.get(i).p.JButtonSplit.isEnabled()) + "\n");
-			writer.write(String.valueOf(jogadoresInterface.get(i).p.JButtonSurrender.isEnabled()) + "\n");
-			writer.write(String.valueOf(jogadoresInterface.get(i).p.JButtonStand.isEnabled()) + "\n");
-			writer.write(String.valueOf(jogadoresInterface.get(i).p.JButtonDouble.isEnabled()) + "\n");
 		}
 
 		
@@ -621,35 +633,59 @@ public class GameManager
 		{
 			dealer.setDealt(true);
 			Carta newCard = new Carta(reader.nextLine(), Integer.parseInt(reader.nextLine()), reader.nextLine());
-			dealer.addCarta(newCard);
+			dealer.addCarta(newCard, 0);
 		}
 		
 		prizePool = Float.parseFloat(reader.nextLine());
 		windowDealer.getPrizePoolLabel().setText("Aposta total = " + String.valueOf(prizePool));
 		turn = Integer.parseInt(reader.nextLine());
 		
-		// Recupera as informa��es dos jogadores e atualiza o jogo com elas
+		// Recupera as informacoes dos jogadores e atualiza o jogo com elas
+		// Loop de load dos jogadores
 		for(int i = 0; i < numPlayers; i++)
 		{
-			int handSize = Integer.parseInt(reader.nextLine());
-			jogadores.get(i).setTotalBet(Integer.parseInt(reader.nextLine()));
+			int numMaos = Integer.parseInt(reader.nextLine());
 			jogadores.get(i).setCreditos(Float.parseFloat(reader.nextLine()));
-			jogadoresInterface.get(i).p.JLabelBet.setText("Aposta = " + String.valueOf(currentPlayer.getTotalBet()));
-			jogadoresInterface.get(i).p.JLabelCredits.setText("Creditos = " + String.valueOf(currentPlayer.getCreditos()));
-			
-			for(int j = 0; j < handSize; j++)
+
+			// Loop de load das maos
+			for (int j = 0; j < numMaos; j++) 
 			{
-				jogadores.get(i).setDealt(true);
-				Carta newCard = new Carta(reader.nextLine(), Integer.parseInt(reader.nextLine()), reader.nextLine());
-				jogadores.get(i).addCarta(newCard);
+				if (j > 0) 
+				{
+					jogadores.get(i).createNewHand();
+				}
+				
+				int handSize = Integer.parseInt(reader.nextLine());
+				System.out.println(jogadores.get(i).getMaoQtd());
+				jogadores.get(i).setTotalBet(Integer.parseInt(reader.nextLine()), j);
+				
+				// Loop de load das cartas
+				for(int k = 0; k < handSize; k++)
+				{
+					jogadores.get(i).setDealt(true);
+					Carta newCard = new Carta(reader.nextLine(), Integer.parseInt(reader.nextLine()), reader.nextLine());
+					jogadores.get(i).getMao(j).addCarta(newCard);
+				}
+				
+				if (j > 0) 
+				{
+					jogadoresInterface.get(i).addNewMao(jogadores.get(i), j+1, this);
+					//jogadoresInterface.get(i).getInterface(j).setVisible(true);
+				}
+				
+				jogadoresInterface.get(i).getInterface(j).p.JLabelBet.setText("Aposta = " + String.valueOf(currentPlayer.getTotalBet(j)));
+				jogadoresInterface.get(i).getInterface(j).p.JLabelCredits.setText("Creditos = " + String.valueOf(currentPlayer.getCreditos()));
+				
+				jogadoresInterface.get(i).getInterface(j).p.JButtonDeal.setEnabled(Boolean.parseBoolean(reader.nextLine()));
+				jogadoresInterface.get(i).getInterface(j).p.JButtonHit.setEnabled(Boolean.parseBoolean(reader.nextLine()));
+				jogadoresInterface.get(i).getInterface(j).p.JButtonSplit.setEnabled(Boolean.parseBoolean(reader.nextLine()));
+				jogadoresInterface.get(i).getInterface(j).p.JButtonSurrender.setEnabled(Boolean.parseBoolean(reader.nextLine()));
+				jogadoresInterface.get(i).getInterface(j).p.JButtonStand.setEnabled(Boolean.parseBoolean(reader.nextLine()));
+				jogadoresInterface.get(i).getInterface(j).p.JButtonDouble.setEnabled(Boolean.parseBoolean(reader.nextLine()));
 			}
 			
-			jogadoresInterface.get(i).getInterface(j).p.JButtonDeal.setEnabled(Boolean.parseBoolean(reader.nextLine()));
-			jogadoresInterface.get(i).getInterface(j).p.JButtonHit.setEnabled(Boolean.parseBoolean(reader.nextLine()));
-			jogadoresInterface.get(i).getInterface(j).p.JButtonSplit.setEnabled(Boolean.parseBoolean(reader.nextLine()));
-			jogadoresInterface.get(i).getInterface(j).p.JButtonSurrender.setEnabled(Boolean.parseBoolean(reader.nextLine()));
-			jogadoresInterface.get(i).getInterface(j).p.JButtonStand.setEnabled(Boolean.parseBoolean(reader.nextLine()));
-			jogadoresInterface.get(i).getInterface(j).p.JButtonDouble.setEnabled(Boolean.parseBoolean(reader.nextLine()));
+			
+			
 		}
 		
 		// Atualiza as janelas do jogo

@@ -123,6 +123,11 @@ public class Jogador
 		this.setCreditos(this.getCreditos() - this.maos.get(0).getTotalBet());
 		this.maos.get(1).setTotalBet(this.maos.get(0).getTotalBet());
 	}
+	
+	public void createNewHand()
+	{
+		this.maos.add(new Mao());
+	}
 
 	public void removeMao(int i) {
 		// TODO Auto-generated method stub

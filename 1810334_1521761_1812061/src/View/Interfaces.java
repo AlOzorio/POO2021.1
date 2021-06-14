@@ -2,7 +2,7 @@ package View;
 
 import java.util.ArrayList;
 
-import Model.GameManager;
+import Controller.GameManager;
 import Model.Jogador;
 
 public class Interfaces {
